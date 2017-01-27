@@ -1,0 +1,18 @@
+PRIORITIES:
+- modify vocab list route pass down the defintions with the results
+- check what's happening with the lemmatizer and comparative/superlative forms, may need to find a workaroud to the lektorek correct definition finder bit which allows szy/naj at the start and end and it still being the same
+- add a way to easily mark in the UI when a word is definitely known
+- check how lektorek deals with pronoun forms, possessive adj and prepositions and conjuctions add a list of these to the known words if necessary, maybe also a list of all numbers
+
+
+To be usable:
+- implement seen threshold on User
+	- User.makeVocabList takes this into account
+- change caching so it catches the whole json each time
+- get vocab list route passing down definitions -> somehow asynchronously so it doesn't block ones loading??
+- UI:
+	- selecting the section to read next -> calls to API to get known and learning
+	- allow toggling between known/learning
+		- make calls to API to change User's known lemmas list
+	- render vocab list for that section for prestudy
+	- button to mark section as read
