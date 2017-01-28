@@ -69,6 +69,15 @@ class TestUser(TestCase):
 			[test_block]
 			)
 
+	def test_delete_block(self):
+		test_block = Block(u'testing', self.myLemmatizer)
+		self.test_user.addBlock(test_block)
+		self.test_user.deleteBlock(u'testing')
+		self.assertEquals(
+			self.test_user.Blocks,
+			[]
+			)
+
 	def test_user_loaded_from_pickle_has_correct_username(self):
 		self.assertEquals(
 			self.test001.username,

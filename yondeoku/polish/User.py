@@ -62,6 +62,14 @@ class User(object):
 			self.Blocks.append(Block)
 		return self.Blocks
 
+	def deleteBlock(self, text):
+		'''str -> [Block] OR None if no Block had that text'''
+		for Block in self.Blocks:
+			if Block.text == text:
+				self.Blocks.remove(Block)
+				return self.Blocks
+		return None
+
 	def instantiateLemmatizer(self, lemmatizerName, dictPath):
 		'''Method to bind a particular lemmatizer to
 		a User instance. Not currently using.'''

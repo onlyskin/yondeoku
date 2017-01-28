@@ -22,6 +22,12 @@ HOST = '0.0.0.0'
 testLemmatizer = Lemmatizer(u'mock/testDict.json')
 
 polishLemmatizer = Lemmatizer(u'lemmaDict.json')
+
+#  .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-
+# / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \
+#`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'
+#### Root Pages ####
+
 @app.route('/')
 def index():
 	return render_template('main.html')
@@ -30,6 +36,11 @@ def index():
 def userOverview():
 	return render_template('userdata.html')
 
+#  .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-
+# / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \
+#`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'
+#### MODEL UPDATE ROUTES ####
+
 @app.route('/getUserData/<username>', methods=['GET'])
 def getUserData(username):
 	'''This retrieves the user data for user with specific
@@ -37,24 +48,34 @@ def getUserData(username):
 	activeUser = User.loadUserDataFromPickle(username)
 	return jsonpickle.encode(activeUser)
 
-#@app.route('/setReadTokens/<username>', methods=['POST'])
-#def setReadTokens(username):
-#	currentUser = User.loadUserDataFromPickle(username)
-#	currentUser.Blocks[0]
-#	print request.form
-
+#.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.
 @app.route('/addBlock/<username>', methods=['POST'])
 def addBlock(username):
-	'''the POST body must contain a json dict,
-	and have mimetype set to application/json
-	dict has text property'''
+	'''The POST body must contain a json dict, and have mimetype set to
+	application/json dict, has text property with the Block text. Route
+	returns the jsonpickled Block, intended to be appended to the block
+	list in the client side state.'''
 	currentUser = User.loadUserDataFromPickle(username)
 	newBlockText = request.get_json()['text']
 	newBlock = Block(newBlockText, polishLemmatizer)
 	currentUser.addBlock(newBlock)
 	currentUser.saveUserDataToPickle()
-	return jsonpickle.encode(currentUser)
+	return jsonpickle.encode(newBlock)
 
+@app.route('/deleteBlock/<username>', methods=['POST'])
+def deleteBlock(username):
+	'''POST to this route. JSON body. {"text": "[[Block.text]]"}
+	Route returns deleted to confirm Block removal. Client to AWAIT
+	confirmation.'''
+	currentUser = User.loadUserDataFromPickle(username)
+	blockText = request.get_json()['text']
+	deleted = currentUser.deleteBlock(blockText)
+	#deleted will be None if no block matched the text
+	if deleted:
+		currentUser.saveUserDataToPickle()
+		return 'deleted'
+
+#.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.
 @app.route('/setKnownWords/<username>', methods=['POST'])
 def setKnownWords(username):
 	'''the POST body must contain a json list,
@@ -77,6 +98,7 @@ def removeKnownWords(username):
 	currentUser.saveUserDataToPickle()
 	return jsonify(currentUser.known)
 
+#.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.
 @app.route('/setThreshold/<username>/<threshold>', methods=['POST'])
 def setThreshold(username, threshold):
 	currentUser = User.loadUserDataFromPickle(username)
@@ -84,15 +106,20 @@ def setThreshold(username, threshold):
 	currentUser.saveUserDataToPickle()
 	return jsonify(currentUser.threshold)
 
-@app.route('/getVocabList/<username>', methods=['POST'])
-def getVocabList(username):
-	'''the POST body must contain a json dict,
-	and have mimetype set to application/json
-	dict has text property'''
-	currentUser = User.loadUserDataFromPickle(username)
-	newText = request.get_json()['text']
-	vocabList = currentUser.makeVocabList(newText, polishLemmatizer)
-	return json.dumps(vocabList)
+#.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.
+
+
+#@app.route('/setReadTokens/<username>', methods=['POST'])
+#def setReadTokens(username):
+#	currentUser = User.loadUserDataFromPickle(username)
+#	currentUser.Blocks[0]
+#	print request.form
+
+
+#  .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-
+# / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \
+#`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'
+#### STUDYING VIEW ROUTES ####
 
 @app.route('/getDef', methods=['POST'])
 def getDef():
@@ -112,6 +139,10 @@ def getDefs():
 		definition = getLektorekDef(word, LEKTOREK_CACHE_PATH)
 		definitions.append(definition)
 	return json.dumps(definitions)
+
+#  .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-
+# / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \
+#`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'
 
 if __name__ == '__main__':
 	app.run(debug=DEBUG, host=HOST, port=PORT)

@@ -5,11 +5,11 @@ Model first passing down:
 	⚪️- keep as jsonpickle for now is fine, will change eventually
 Model State changes:
 	User:
-		- add block
-		- delete block
-		- add word to known word list
-		- remove word form known word list
-		- update threshold value
+		⚪- add block
+		⚪- delete block
+		⚪- add word to known word list
+		⚪- remove word from known word list
+		⚪- update threshold value
 	Block:
 		- mark token range as read
 		- mark token range as unread
