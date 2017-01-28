@@ -67,6 +67,7 @@ def getLektorekJSONFromCache(word, LEKTOREK_CACHE_PATH):
 #Takes a base form, only returns words
 #from the Lektorek JSON if they
 #exactly equal the input string
+###FOR USE WITH LEMMAS
 def getLektorekDef(word, LEKTOREK_CACHE_PATH):
 	if not checkLektorekCache(word, LEKTOREK_CACHE_PATH):
 		JSON = getJSONfromURL(word)

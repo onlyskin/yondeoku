@@ -1,8 +1,8 @@
 BACK END APIs to IMPLEMENT:
-- get lektorek definition for list of words
-- get lektorek definition for single word
+⚪- get lektorek definition for list of words
+⚪- get lektorek definition for single word
 Model first passing down:
-	- keep as jsonpickle for now is fine, will change eventually
+	⚪️- keep as jsonpickle for now is fine, will change eventually
 Model State changes:
 	User:
 		- add block

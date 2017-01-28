@@ -12,7 +12,8 @@ import jsonpickle
 from yondeoku.polish.User import User
 from yondeoku.polish.Block import Block
 from yondeoku.polish.Lemmatizer import Lemmatizer
-from yondeoku.polish.settings import DATA_PATH
+from yondeoku.polish.settings import DATA_PATH, LEKTOREK_CACHE_PATH
+from yondeoku.polish.getLektorekDef import getLektorekDef
 
 DEBUG = True
 PORT = 4000
@@ -92,6 +93,25 @@ def getVocabList(username):
 	newText = request.get_json()['text']
 	vocabList = currentUser.makeVocabList(newText, polishLemmatizer)
 	return json.dumps(vocabList)
+
+@app.route('/getDef', methods=['POST'])
+def getDef():
+	'''the POST body must contain a json dict with {'word': 'x'}
+	the function returns a list of definitions'''
+	word = request.get_json()['word']
+	definition = getLektorekDef(word, LEKTOREK_CACHE_PATH)
+	return json.dumps(definition)
+
+@app.route('/getDefs', methods=['POST'])
+def getDefs():
+	'''the POST body must contain a json dict with {'words': [word, ...]}
+	the function returns a list of definition lists'''
+	words = request.get_json()['words']
+	definitions = []
+	for word in words:
+		definition = getLektorekDef(word, LEKTOREK_CACHE_PATH)
+		definitions.append(definition)
+	return json.dumps(definitions)
 
 if __name__ == '__main__':
 	app.run(debug=DEBUG, host=HOST, port=PORT)
