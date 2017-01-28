@@ -21,10 +21,6 @@ HOST = '0.0.0.0'
 testLemmatizer = Lemmatizer(u'mock/testDict.json')
 
 polishLemmatizer = Lemmatizer(u'lemmaDict.json')
-@app.route('/polishlemmatizer/<word>', methods=['GET'])
-def lookupLemma(word):
-	return json.dumps(polishLemmatizer.lookupLemma(word))
-
 @app.route('/')
 def index():
 	return render_template('main.html')
