@@ -9,8 +9,20 @@ from pprint import pprint
 
 from yondeoku.polish.settings import LEKTOREK_CACHE_PATH
 
+#word -> boolean
+def checkLektorekCache(word, LEKTOREK_CACHE_PATH):
+	f = codecs.open(LEKTOREK_CACHE_PATH, 'r', 'utf-8')
+	JSON = json.loads(f.read())
+	f.close()
+	if word in JSON:
+		return True
+	else:
+		return False
+
 #str word -> JSON
 def getJSONfromURL(word):
+	'''Makes an http request to lektorek and returns {} if it fails
+	and a dict loaded from the entire returned json if it passes.'''
 	print word
 	url = api_url = "http://lektorek.org/dapi/v1/index.php/search/chomper/polish/" + word + "?diacritics=false&pos=all"
 	r = requests.get(url)
@@ -22,6 +34,10 @@ def getJSONfromURL(word):
 
 #JSON -> [str] HTML
 def getCorrectDef(JSON):
+	'''Takes the raw JSON string (either cached or requested)
+	and returns a list of definitions deemed to be correct by
+	the function. This can be modified later, because we have
+	saved the entire JSON in the cache.'''
 	if JSON == {}:
 		return []
 	results = JSON[u'results']
@@ -31,6 +47,22 @@ def getCorrectDef(JSON):
 			definitions.append(result[u'embedded_definition'])
 	return definitions
 
+def cacheLektorekResult(word, JSON, LEKTOREK_CACHE_PATH):
+	'''Caches the entire JSON from the getJSONfromURL call.'''
+	f = codecs.open(LEKTOREK_CACHE_PATH, 'r', 'utf-8')
+	cachedJSON = json.loads(f.read())
+	f.close()
+	cachedJSON[word] = JSON
+	f = codecs.open(LEKTOREK_CACHE_PATH, 'w', 'utf-8')
+	f.write(json.dumps(cachedJSON, sort_keys=True, indent=4, separators=(',', ': ')))
+	f.close()
+
+def getLektorekJSONFromCache(word, LEKTOREK_CACHE_PATH):
+	f = codecs.open(LEKTOREK_CACHE_PATH, 'r', 'utf-8')
+	JSON = json.loads(f.read())
+	f.close()
+	return JSON[word]
+
 #Returns a [str] for the word
 #Takes a base form, only returns words
 #from the Lektorek JSON if they
@@ -38,33 +70,10 @@ def getCorrectDef(JSON):
 def getLektorekDef(word, LEKTOREK_CACHE_PATH):
 	if not checkLektorekCache(word, LEKTOREK_CACHE_PATH):
 		JSON = getJSONfromURL(word)
+		cacheLektorekResult(word, JSON, LEKTOREK_CACHE_PATH)
 		result = getCorrectDef(JSON)
-		cacheLektorekResult(word, result, LEKTOREK_CACHE_PATH)
 		return result
 	else:
-		return getLektorekDefFromCache(word, LEKTOREK_CACHE_PATH)
-
-#word -> boolean
-def checkLektorekCache(word, LEKTOREK_CACHE_PATH):
-	f = codecs.open(LEKTOREK_CACHE_PATH, 'r', 'utf-8')
-	JSON = json.loads(f.read())
-	f.close()
-	if word in JSON:
-		return True
-	else:
-		return False
-
-def cacheLektorekResult(word, result, LEKTOREK_CACHE_PATH):
-	f = codecs.open(LEKTOREK_CACHE_PATH, 'r', 'utf-8')
-	JSON = json.loads(f.read())
-	f.close()
-	JSON[word] = result
-	f = codecs.open(LEKTOREK_CACHE_PATH, 'w', 'utf-8')
-	f.write(json.dumps(JSON, sort_keys=True, indent=4, separators=(',', ': ')))
-	f.close()
-
-def getLektorekDefFromCache(word, LEKTOREK_CACHE_PATH):
-	f = codecs.open(LEKTOREK_CACHE_PATH, 'r', 'utf-8')
-	JSON = json.loads(f.read())
-	f.close()
-	return JSON[word]
+		JSON = getLektorekJSONFromCache(word, LEKTOREK_CACHE_PATH)
+		result = getCorrectDef(JSON)
+		return result

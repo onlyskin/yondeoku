@@ -2,11 +2,11 @@
 # -*- coding: utf-8 -*-
 
 from unittest import TestCase
-from unittest.mock import patch
 
 from os.path import isfile
 import os
 
+import yondeoku
 from yondeoku.polish.User import User
 from yondeoku.polish.Block import Block
 from yondeoku.polish.Token import Token
@@ -33,10 +33,23 @@ class TestUser(TestCase):
 		cls.test_user_read_lemmas = test_user.getReadLemmas()
 		new_text_1 = u'przyjaciela brzmi lepszemu herbaty.'
 		cls.read_counts_new_lemmas_test_1 = test_user.getReadCountsForNewLemmas(new_text_1, cls.myLemmatizer)
+
+		oldValue = yondeoku.polish.settings.LEKTOREK_CACHE_PATH
+		yondeoku.polish.settings.LEKTOREK_CACHE_PATH = 'mock/lektorekMockVocab.json'
+
 		cls.vocab_list_test_1 = test_user.makeVocabList(new_text_1, cls.myLemmatizer)
+
+		yondeoku.polish.settings.LEKTOREK_CACHE_PATH = oldValue
+
 		new_text_2 = u'przyjaciela brzmi lepszemu herbaty. brzmisz'
 		cls.read_counts_new_lemmas_test_2 = test_user.getReadCountsForNewLemmas(new_text_2, cls.myLemmatizer)
+
+		oldValue = yondeoku.polish.settings.LEKTOREK_CACHE_PATH
+		yondeoku.polish.settings.LEKTOREK_CACHE_PATH = 'mock/lektorekMockVocab.json'
+
 		cls.vocab_list_test_2 = test_user.makeVocabList(new_text_2, cls.myLemmatizer)
+
+		yondeoku.polish.settings.LEKTOREK_CACHE_PATH = oldValue
 
 	def test_get_read_lemmas(self):
 		self.assertEquals(
@@ -57,8 +70,7 @@ class TestUser(TestCase):
 			]
 			)
 
-	@patch('yondeoku.polish.settings.LEKTOREK_CACHE_PATH')
-	def test_vocab_list_test_1(self, 'mock/lektorekMockVocab.json'):
+	def test_vocab_list_test_1(self):
 		self.assertEquals(
 			self.vocab_list_test_1,
 			[
@@ -86,8 +98,7 @@ class TestUser(TestCase):
 			]
 			)
 
-	@patch('yondeoku.polish.settings.LEKTOREK_CACHE_PATH')
-	def test_vocab_list_test_2(self, 'mock/lektorekMockVocab.json'):
+	def test_vocab_list_test_2(self):
 		self.assertEquals(
 			self.vocab_list_test_2,
 			[

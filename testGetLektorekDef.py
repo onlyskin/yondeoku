@@ -3,7 +3,7 @@ import codecs
 
 from unittest import TestCase
 
-from yondeoku.polish.getLektorekDef import getCorrectDef, checkLektorekCache, cacheLektorekResult, getLektorekDefFromCache
+from yondeoku.polish.getLektorekDef import getCorrectDef, checkLektorekCache, cacheLektorekResult, getLektorekJSONFromCache
 
 class TestGetLektorekDef(TestCase):
 
@@ -47,15 +47,15 @@ class TestGetLektorekDef(TestCase):
 	def test_check_lektorek_cache_false_for_wiarygodny(self):
 		self.assertFalse(checkLektorekCache(u'wiarygodny', self.mock_cache_path))
 
-	def test_get_lektorek_def_from_cache(self):
+	def test_get_lektorek_json_from_cache(self):
 		self.assertEquals(
-			getLektorekDefFromCache('pyszny', self.mock_cache_path),
-			["<span class=\"bold\">pyszny </span><span class=\"italics\">aj </span>elegant, luxurious. <span class=\"italics\">av </span><span class=\"bold\">pysznie</span>"]
+			getLektorekJSONFromCache('pyszny', self.mock_cache_path),
+			{'tested': 'yes'}
 			)
 
 	def test_cache_lektorek_result(self):
-		cacheLektorekResult('testing', ["testing a result"], self.mock_cache_path)
+		cacheLektorekResult('testing', {'testing a result': 'tested'}, self.mock_cache_path)
 		self.assertEquals(
-			getLektorekDefFromCache('testing', self.mock_cache_path),
-			["testing a result"]
+			getLektorekJSONFromCache('testing', self.mock_cache_path),
+			{"testing a result": "tested"}
 			)

@@ -1,18 +1,87 @@
+BACK END APIs to IMPLEMENT:
+- get lektorek definition for list of words
+- get lektorek definition for single word
+Model first passing down:
+	- keep as jsonpickle for now is fine, will change eventually
+Model State changes:
+	User:
+		- add block
+		- delete block
+		- add word to known word list
+		- remove word form known word list
+		- update threshold value
+	Block:
+		- mark token range as read
+		- mark token range as unread
+
+FRONT END APIs to IMPLEMENT:
+Things that sync to model:
+	- add word to known word list
+		- keep back end in sync
+	- remove word from known word list
+		- keep back end in sync
+	- add block
+		- keep back end in sync
+	- remove block
+		- keep back end in sync
+	- mark token range as read
+		- keep back end in sync
+	- mark token range as unread
+		- keep back end in sync
+	- update threshold value
+		- keep back end in sync
+Studying Functions:
+- instantiate a $scope variable which does what getReadLemmas currently does in 裏: it is a dict of key, value mappings where keys are lemmas and values are no. of times encountered {str: int, ...}.
+- find out if a word is a 'new word' isNew
+	- takes a lemma
+	- if it is in the known list, it is not new
+	- if it is in the readLemmaDict (see above) and above threshold, it is not new
+	- otherwise it is new
+- getting next text blob from the current Block (keep track of where it's got to so far)
+- get currently reading section
+	- if currently empty
+		- get greatest number of full sentences which don't exceed X new words
+			- get text blob up to next 'break point'
+			vocabList = []
+			blob = getNextBlob(text)
+			for lemma in blob:
+				if isNew(lemma):
+					vocabList.append(lemma)
+			- continue iterating like this until the vocab list exceeds the desired number of words, then discard the final iteration
+- post words from list to get their definitions from the backend Lektorek route (learning view)
+Reading functions:
+- post a single word to get definition from the backend Lektorek route (reading view)
+- post to mark section as read
+
+	- the function is also to be called whenever user marks words as known
+		- needs to be able to update the current reading section value without ruining user input (probably fine)
+
+
+
+Main UI Flow:
+- select Block to start reading
+- renders list of next ~10 lemmas w/out definitions
+	- user can click any to say definitely known
+		- pulls in new words if room
+	- textboxes by all words for user to type their guesses in
+		- click submit
+	- displays actual definitions alongside user's guesses
+		- tick each off to say studied
+		- click submit and read
+- displays text section
+	- hovering over a word should allow clicking to get reminder
+	- button to mark as read and read more
+
+
+
+FUTURE-PROOFING:
+- keep read dates for readtokens
+- keep generated vocab lists, with section they were for, and start and end times -> later could calculate no. new words learnt and how much read in how long and graphs, etc.
+
 PRIORITIES:
-- modify vocab list route pass down the defintions with the results
 - check what's happening with the lemmatizer and comparative/superlative forms, may need to find a workaroud to the lektorek correct definition finder bit which allows szy/naj at the start and end and it still being the same
-- add a way to easily mark in the UI when a word is definitely known
 - check how lektorek deals with pronoun forms, possessive adj and prepositions and conjuctions add a list of these to the known words if necessary, maybe also a list of all numbers
 
 
-To be usable:
-- implement seen threshold on User
-	- User.makeVocabList takes this into account
-- change caching so it catches the whole json each time
-- get vocab list route passing down definitions -> somehow asynchronously so it doesn't block ones loading??
-- UI:
-	- selecting the section to read next -> calls to API to get known and learning
-	- allow toggling between known/learning
-		- make calls to API to change User's known lemmas list
-	- render vocab list for that section for prestudy
-	- button to mark section as read
+Ideas for features:
+	- sorting the list of studying words alphabetically
