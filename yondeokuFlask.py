@@ -30,6 +30,10 @@ polishLemmatizer = Lemmatizer(u'lemmaDict.json')
 
 @app.route('/')
 def index():
+	return render_template('studying.html')
+
+@app.route('/old')
+def old():
 	return render_template('main.html')
 
 @app.route('/userOverview')
@@ -78,25 +82,25 @@ def deleteBlock(username):
 #.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.
 @app.route('/setKnownWords/<username>', methods=['POST'])
 def setKnownWords(username):
-	'''the POST body must contain a json list,
-	and have mimetype set to application/json'''
+	'''POST body: [word, word, word]
+	mimetype application/json'''
 	currentUser = User.loadUserDataFromPickle(username)
 	words = request.get_json()
 	for word in words:
 		currentUser.known.add(word)
 	currentUser.saveUserDataToPickle()
-	return jsonify(currentUser.known)
+	return jsonpickle.encode(currentUser.known)
 
 @app.route('/removeKnownWords/<username>', methods=['POST'])
 def removeKnownWords(username):
-	'''the POST body must contain a json list,
-	and have mimetype set to application/json'''
+	'''POST body: [word, word, word]
+	mimetype application/json'''
 	currentUser = User.loadUserDataFromPickle(username)
 	words = request.get_json()
 	for word in words:
 		currentUser.known.remove(word)
 	currentUser.saveUserDataToPickle()
-	return jsonify(currentUser.known)
+	return jsonpickle.encode(currentUser.known)
 
 #.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.
 @app.route('/setThreshold/<username>/<threshold>', methods=['POST'])
@@ -107,14 +111,30 @@ def setThreshold(username, threshold):
 	return jsonify(currentUser.threshold)
 
 #.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.
+@app.route('/setReadTokens/<username>', methods=['POST'])
+def setReadTokens(username):
+	'''POST to the route to set a values in the Block's readTokens
+	array. The JSON POSTed includes the blockText of the block, an
+	index in and index out of tokens to be set, and the boolean to
+	set the readToken values to.
 
+	POST body: {"blockText": "[[Block.text]]",
+					"readIn": int,
+					"readOut": int,
+					"readValue": Boolean}
 
-#@app.route('/setReadTokens/<username>', methods=['POST'])
-#def setReadTokens(username):
-#	currentUser = User.loadUserDataFromPickle(username)
-#	currentUser.Blocks[0]
-#	print request.form
-
+	mimetype application/json'''
+	JSON = request.get_json()
+	blockText = JSON['blockText']
+	readIn = JSON['readIn']
+	readOut = JSON['readOut']
+	readValue = JSON['readValue']
+	currentUser = User.loadUserDataFromPickle(username)
+	activeBlock = next(Block for Block in currentUser.Blocks if Block.text == blockText)
+	for i, value in enumerate(activeBlock.readTokens()):
+		if i >= readIn and i < readOut:
+			activeBlock.readTokens[i] = readValue
+	return 'set'
 
 #  .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-
 # / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \

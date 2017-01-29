@@ -1,0 +1,81 @@
+#page {
+	display: flex;
+	justify-content: center;
+}
+
+#wrapper {
+	display: flex;
+	flex-direction: column;
+	max-width: 90%;	
+	border: 1px dotted black;
+}
+
+button {
+	background-color: #699ce8;
+}
+
+user-overview {
+	border: 2px solid DarkViolet;
+	margin: 2px;
+
+	display: flex;
+
+	#userInfo {
+		display: flex;
+		flex-direction: column;
+		border: 1px solid black;
+		padding: 10px;
+		margin: 2px;
+
+		.block {
+			display: flex;
+		}
+
+		button {
+			width: 200px;
+		}
+	}
+
+	#blockText {
+		display: flex;
+		flex-direction: column;
+
+		white-space: pre-wrap;
+		text-align: justify;
+		border: 1px solid black;
+		padding: 10px;
+		margin: 2px;
+	
+		button {
+			width: 200px;
+			align-self: flex-end;
+		}
+	}
+}
+
+study {
+	border: 2px solid RoyalBlue;
+	padding: 2px;
+	margin: 2px;
+
+	#studyContainer {
+		display: flex;
+		flex-direction: column;
+	}
+
+	button {
+		align-self: flex-end;
+	}
+}
+
+dev-stats {
+	border: 2px solid Maroon;
+	padding: 10px;
+	margin: 2px;
+
+	.blocks {
+		padding: 3px;
+		padding-left: 10px;
+		font-family: monospace;
+	}
+}

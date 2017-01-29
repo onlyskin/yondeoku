@@ -142,7 +142,9 @@ class User(object):
 
 		Convenience method to update blocks when we
 		change how we initialise the static properties
-		for block.'''
+		for block.
+
+		NOTE: will ERASE ANY READING HISTORY'''
 		newBlocks = []
 		for instance in self.Blocks:
 			regeneratedBlock = Block(instance.text, myLemmatizer)

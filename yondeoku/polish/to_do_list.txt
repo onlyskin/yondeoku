@@ -11,8 +11,8 @@ Model State changes:
 		⚪- remove word from known word list
 		⚪- update threshold value
 	Block:
-		- mark token range as read
-		- mark token range as unread
+		⚪- mark token range as read
+		⚪- mark token range as unread
 
 FRONT END APIs to IMPLEMENT:
 Things that sync to model:

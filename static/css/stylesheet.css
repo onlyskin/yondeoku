@@ -1,107 +1,59 @@
+#page {
+  display: flex;
+  justify-content: center; }
+
+#wrapper {
+  display: flex;
+  flex-direction: column;
+  max-width: 90%;
+  border: 1px dotted black; }
+
 button {
-	background-color: #699ce8;
-	}
+  background-color: #699ce8; }
 
-#user-information {
-	max-width: 50%;
-	padding: 10px;
-	border: 1px solid black;
+user-overview {
+  border: 2px solid DarkViolet;
+  margin: 2px;
+  display: flex; }
+  user-overview #userInfo {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    padding: 10px;
+    margin: 2px; }
+    user-overview #userInfo .block {
+      display: flex; }
+    user-overview #userInfo button {
+      width: 200px; }
+  user-overview #blockText {
+    display: flex;
+    flex-direction: column;
+    white-space: pre-wrap;
+    text-align: justify;
+    border: 1px solid black;
+    padding: 10px;
+    margin: 2px; }
+    user-overview #blockText button {
+      width: 200px;
+      align-self: flex-end; }
 
-	display: flex;
-	flex-direction: column;
-}
+study {
+  border: 2px solid RoyalBlue;
+  padding: 2px;
+  margin: 2px; }
+  study #studyContainer {
+    display: flex;
+    flex-direction: column; }
+  study button {
+    align-self: flex-end; }
 
-#user-information textarea {
-	width: 100%;
-	height: 100px;
-}
+dev-stats {
+  border: 2px solid Maroon;
+  padding: 10px;
+  margin: 2px; }
+  dev-stats .blocks {
+    padding: 3px;
+    padding-left: 10px;
+    font-family: monospace; }
 
-#live-reading {
-	padding: 10px;
-
-	display: flex;
-	flex-direction: row;
-}
-
-#current-block {
-	border: 1px dotted black;
-	padding: 10px;
-
-	max-width: 50%;
-}
-
-#current-block #buttons {
-	display: flex;
-	flex-direction: column;
-}
-
-#current-block #blockText {
-	white-space: pre-wrap;
-	text-align: justify;
-}
-
-#vocab-list {
-	max-width: 50%;
-
-	display: flex;
-	flex-direction: column;
-
-	padding: 10px;
-	border: 1px dotted black;
-}
-
-#vocab-list table td {
-	border-top: 1px solid black;
-}
-
-#vocab-list table .vocab {
-	text-align: right;
-	vertical-align: top;
-}
-
-#vocab-list table .definition {
-	text-align: justify;
-	font-size: 14px;
-}
-
-td span.bold {
-	font-weight: bold;
-}
-
-td span.italics {
-	font-style: italic;
-}
-
-#vocab-list .vocab-item .lemma {}
-#vocab-list .vocab-item .definition {}
-
-.read {
-	color: red;
-}
-
-.block {
-	border: 1px dotted black;
-	padding: 10px;
-	margin-top: 10px;
-	margin-bottom: 10px;
-
-	display: flex;
-	flex-direction: column;
-}
-
-.block-text {
-	opacity: 0.5;
-	font-style: italic;
-}
-
-.block-tokens {
-	display: inline-block;
-}
-
-.block-lemmas {
-	display: inline-block;
-}
-
-#indexIn, #indexOut {
-	width: 30px;
-}
+/*# sourceMappingURL=stylesheet.css.map */
