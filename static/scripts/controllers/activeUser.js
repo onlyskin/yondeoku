@@ -1,11 +1,12 @@
 'use strict';
 
 angular.module('yondeokuApp')
-.controller('activeUserCtrl', function($scope, DataService, ServerService, $http, $sce) {
+.controller('activeUserCtrl', function($scope, DataService, ServerService, $http, $sce, $timeout) {
 
   $scope.userdata = DataService.userdata;
 
   DataService.getUserdata();
+  $timeout(() => {$scope.currentBlock = $scope.userdata.Blocks[0]}, 100);
 
   $scope.ServerService = ServerService;
 

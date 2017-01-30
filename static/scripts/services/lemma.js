@@ -21,6 +21,18 @@ angular.module('yondeokuApp')
 				}
 			}
 			return result;
+		},
+		getNextBlob: function(Block, startIndex) {
+			//returns the index of the next token with a fullstop
+			var nextBreakpoint = function(start) {
+				var tt = Block.tokens.map((t) => t.tokenText);
+				for (var i in tt) {
+					if (i >= start && tt[i].indexOf('.') >= 0) {
+						return parseInt(i);
+					}
+				}
+			};
+			return {indexIn: startIndex, indexOut: nextBreakpoint(startIndex)};
 		}
 	};
 

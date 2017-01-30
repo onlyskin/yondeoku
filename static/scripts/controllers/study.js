@@ -20,6 +20,21 @@ angular.module('yondeokuApp')
 		}
 	};
 
-//	$timeout(isNew, 100);
+	var getStudying = function() {
+		var currentBlock = $scope.currentBlock;
+		var readingPosition = currentBlock.readTokens.indexOf(false);
+		var newWords = [];
+		while (newWords.length < 10) {
+			let blob = LemmaService.getNextBlob(currentBlock, readingPosition);
+			let words = currentBlock.bestLemmaList.slice(blob.indexIn, blob.indexOut + 1)
+			readingPosition = blob.indexOut + 1;
+
+			let filteredWords = words.filter((w) => isNew(w))
+			Array.prototype.push.apply(newWords, filteredWords);
+		}
+		return newWords;
+	};
+
+	$timeout(() => {$scope.newWords = getStudying()}, 150);
 
 });

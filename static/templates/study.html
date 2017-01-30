@@ -1,8 +1,6 @@
 <div ng-controller="studyCtrl" id="studyContainer">
 	<div id="dev">
 		<div>[[ currentBlock.text ]]</div>
-		<div>[[ currentBlock.lemmaList ]]</div>
-		<div>[[ currentBlock.bestLemmaList ]]</div>
 		<div>[[ currentBlock.readTokens ]]</div>
 	</div>
 	<table id="vocabItems">
@@ -14,7 +12,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr class="lemma" ng-repeat="lemma in currentBlock.bestLemmaList.slice(0, 10) track by $index">
+			<tr class="lemma" ng-repeat="lemma in newWords track by $index">
 				<td class="add" ng-click="ServerService.addKnownLemma(lemma)">◎</td>
 				<td class="lemma">[[ lemma ]]</td>
 				<td class="guess"><input type="text"></td>
