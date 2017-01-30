@@ -24,19 +24,19 @@ Things that sync to model:
 		- keep back end in sync
 	⚪- remove block
 		- keep back end in sync
-	- mark token range as read
+	⚪- mark token range as read
 		- keep back end in sync
-	- mark token range as unread
+	⚪- mark token range as unread
 		- keep back end in sync
 	⚪- update threshold value
 		- keep back end in sync
 Studying Functions:
-- instantiate a $scope variable which does what getReadLemmas currently does in 裏: it is a dict of key, value mappings where keys are lemmas and values are no. of times encountered {str: int, ...}.
-- find out if a word is a 'new word' isNew
-	- takes a lemma
-	- if it is in the known list, it is not new
-	- if it is in the readLemmaDict (see above) and above threshold, it is not new
-	- otherwise it is new
+⚪- instantiate a service variable which gets a dict of readLemmas
+⚪- find out if a word is a 'new word' isNew
+	⚪- takes a lemma
+	⚪- if it is in the known list, it is not new
+	⚪- if it is in the readLemmaDict (see above) and above threshold, it is not new
+	⚪- otherwise it is new
 - getting next text blob from the current Block (keep track of where it's got to so far)
 - get currently reading section
 	- if currently empty
@@ -85,3 +85,5 @@ PRIORITIES:
 
 Ideas for features:
 	- sorting the list of studying words alphabetically
+
+https://www.pluralsight.com/blog/software-development/tutorial-angularjs-mvc-implementation
