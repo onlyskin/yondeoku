@@ -14,6 +14,7 @@ from yondeoku.polish.Block import Block
 from yondeoku.polish.Lemmatizer import Lemmatizer
 from yondeoku.polish.settings import DATA_PATH, LEKTOREK_CACHE_PATH
 from yondeoku.polish.getLektorekDef import getLektorekDef
+from yondeoku.polish.UserEncoder import UserEncoder
 
 DEBUG = True
 PORT = 4000
@@ -50,7 +51,7 @@ def getUserData(username):
 	'''This retrieves the user data for user with specific
 	username and returns it as json to the webpage.'''
 	activeUser = User.loadUserDataFromPickle(username)
-	return jsonpickle.encode(activeUser, make_refs=False)
+	return json.dumps(activeUser, cls=UserEncoder, sort_keys=True, indent=4, separators=(',', ': '))
 
 #.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.
 @app.route('/addBlock/<username>', methods=['POST'])
@@ -62,7 +63,7 @@ def addBlock(username):
 	newBlock = Block(newBlockText, polishLemmatizer)
 	currentUser.addBlock(newBlock)
 	currentUser.saveUserDataToPickle()
-	return jsonpickle.encode(currentUser, make_refs=False)
+	return json.dumps(currentUser, cls=UserEncoder, sort_keys=True, indent=4, separators=(',', ': '))
 
 @app.route('/deleteBlock/<username>', methods=['POST'])
 def deleteBlock(username):
@@ -74,7 +75,7 @@ def deleteBlock(username):
 	#deleted will be None if no block matched the text
 	if deleted:
 		currentUser.saveUserDataToPickle()
-		return jsonpickle.encode(currentUser, make_refs=False)
+		return json.dumps(currentUser, cls=UserEncoder, sort_keys=True, indent=4, separators=(',', ': '))
 
 #.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.
 @app.route('/setKnownWords/<username>', methods=['POST'])
@@ -86,7 +87,7 @@ def setKnownWords(username):
 	for word in words:
 		currentUser.known.add(word)
 	currentUser.saveUserDataToPickle()
-	return jsonpickle.encode(currentUser, make_refs=False)
+	return json.dumps(currentUser, cls=UserEncoder, sort_keys=True, indent=4, separators=(',', ': '))
 
 @app.route('/removeKnownWords/<username>', methods=['POST'])
 def removeKnownWords(username):
@@ -97,7 +98,7 @@ def removeKnownWords(username):
 	for word in words:
 		currentUser.known.remove(word)
 	currentUser.saveUserDataToPickle()
-	return jsonpickle.encode(currentUser, make_refs=False)
+	return json.dumps(currentUser, cls=UserEncoder, sort_keys=True, indent=4, separators=(',', ': '))
 
 #.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.
 @app.route('/setThreshold/<username>/<threshold>', methods=['POST'])
@@ -105,7 +106,7 @@ def setThreshold(username, threshold):
 	currentUser = User.loadUserDataFromPickle(username)
 	currentUser.threshold = int(threshold)
 	currentUser.saveUserDataToPickle()
-	return jsonpickle.encode(currentUser, make_refs=False)
+	return json.dumps(currentUser, cls=UserEncoder, sort_keys=True, indent=4, separators=(',', ': '))
 
 #.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.
 @app.route('/setReadTokens/<username>', methods=['POST'])
@@ -132,7 +133,7 @@ def setReadTokens(username):
 		if i >= readIn and i < readOut:
 			activeBlock.readTokens[i] = readValue
 	currentUser.saveUserDataToPickle()
-	return jsonpickle.encode(currentUser, make_refs=False)
+	return json.dumps(currentUser, cls=UserEncoder, sort_keys=True, indent=4, separators=(',', ': '))
 
 #  .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-
 # / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \
