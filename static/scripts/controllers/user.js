@@ -1,3 +1,4 @@
+//DEPRECATED CURRENTLY
 'use strict';
 
 angular.module('yondeokuApp')

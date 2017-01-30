@@ -50,34 +50,31 @@ def getUserData(username):
 	'''This retrieves the user data for user with specific
 	username and returns it as json to the webpage.'''
 	activeUser = User.loadUserDataFromPickle(username)
-	return jsonpickle.encode(activeUser)
+	return jsonpickle.encode(activeUser, make_refs=False)
 
 #.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.
 @app.route('/addBlock/<username>', methods=['POST'])
 def addBlock(username):
-	'''The POST body must contain a json dict, and have mimetype set to
-	application/json dict, has text property with the Block text. Route
-	returns the jsonpickled Block, intended to be appended to the block
-	list in the client side state.'''
+	'''POST to this route. JSON body. {"text": "[[Block.text]]"}
+	Route returns new user data.'''
 	currentUser = User.loadUserDataFromPickle(username)
 	newBlockText = request.get_json()['text']
 	newBlock = Block(newBlockText, polishLemmatizer)
 	currentUser.addBlock(newBlock)
 	currentUser.saveUserDataToPickle()
-	return jsonpickle.encode(newBlock)
+	return jsonpickle.encode(currentUser, make_refs=False)
 
 @app.route('/deleteBlock/<username>', methods=['POST'])
 def deleteBlock(username):
 	'''POST to this route. JSON body. {"text": "[[Block.text]]"}
-	Route returns deleted to confirm Block removal. Client to AWAIT
-	confirmation.'''
+	Route returns new user data.'''
 	currentUser = User.loadUserDataFromPickle(username)
 	blockText = request.get_json()['text']
 	deleted = currentUser.deleteBlock(blockText)
 	#deleted will be None if no block matched the text
 	if deleted:
 		currentUser.saveUserDataToPickle()
-		return 'deleted'
+		return jsonpickle.encode(currentUser, make_refs=False)
 
 #.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.
 @app.route('/setKnownWords/<username>', methods=['POST'])
@@ -89,7 +86,7 @@ def setKnownWords(username):
 	for word in words:
 		currentUser.known.add(word)
 	currentUser.saveUserDataToPickle()
-	return jsonpickle.encode(currentUser.known)
+	return jsonpickle.encode(currentUser, make_refs=False)
 
 @app.route('/removeKnownWords/<username>', methods=['POST'])
 def removeKnownWords(username):
@@ -100,7 +97,7 @@ def removeKnownWords(username):
 	for word in words:
 		currentUser.known.remove(word)
 	currentUser.saveUserDataToPickle()
-	return jsonpickle.encode(currentUser.known)
+	return jsonpickle.encode(currentUser, make_refs=False)
 
 #.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.
 @app.route('/setThreshold/<username>/<threshold>', methods=['POST'])
@@ -108,7 +105,7 @@ def setThreshold(username, threshold):
 	currentUser = User.loadUserDataFromPickle(username)
 	currentUser.threshold = int(threshold)
 	currentUser.saveUserDataToPickle()
-	return jsonify(currentUser.threshold)
+	return jsonpickle.encode(currentUser, make_refs=False)
 
 #.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.
 @app.route('/setReadTokens/<username>', methods=['POST'])
@@ -134,7 +131,8 @@ def setReadTokens(username):
 	for i, value in enumerate(activeBlock.readTokens()):
 		if i >= readIn and i < readOut:
 			activeBlock.readTokens[i] = readValue
-	return 'set'
+	currentUser.saveUserDataToPickle()
+	return jsonpickle.encode(currentUser, make_refs=False)
 
 #  .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-
 # / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \

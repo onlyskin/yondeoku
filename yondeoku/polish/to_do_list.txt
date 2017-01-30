@@ -16,19 +16,19 @@ Model State changes:
 
 FRONT END APIs to IMPLEMENT:
 Things that sync to model:
-	- add word to known word list
+	⚪- add word to known word list
 		- keep back end in sync
-	- remove word from known word list
+	⚪- remove word from known word list
 		- keep back end in sync
-	- add block
+	⚪- add block
 		- keep back end in sync
-	- remove block
+	⚪- remove block
 		- keep back end in sync
 	- mark token range as read
 		- keep back end in sync
 	- mark token range as unread
 		- keep back end in sync
-	- update threshold value
+	⚪- update threshold value
 		- keep back end in sync
 Studying Functions:
 - instantiate a $scope variable which does what getReadLemmas currently does in 裏: it is a dict of key, value mappings where keys are lemmas and values are no. of times encountered {str: int, ...}.

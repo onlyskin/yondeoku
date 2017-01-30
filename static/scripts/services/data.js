@@ -1,11 +1,16 @@
 'use strict';
 
 angular.module('yondeokuApp')
-.service('dataService', function($http) {
- 
-  this.getUserData = function(callback){
-    $http.get('getUserData/flaskTestUser')
-    .then(callback)
-  };
+.factory('DataService', function($http) {
 
+	var dataServiceInstance = { userdata: {} };
+
+	dataServiceInstance.getUserdata = function() {
+		$http.get('getUserData/flaskTestUser')
+		.then(function(response) {
+			Object.assign(dataServiceInstance.userdata, response.data);
+		});
+	};
+
+	return dataServiceInstance;
 });

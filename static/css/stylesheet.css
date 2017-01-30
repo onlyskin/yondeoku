@@ -1,3 +1,6 @@
+#filler {
+  height: 200px; }
+
 #page {
   display: flex;
   justify-content: center; }
@@ -5,7 +8,7 @@
 #wrapper {
   display: flex;
   flex-direction: column;
-  max-width: 90%;
+  width: 90%;
   border: 1px dotted black; }
 
 button {
@@ -44,6 +47,24 @@ study {
   study #studyContainer {
     display: flex;
     flex-direction: column; }
+  study #dev {
+    display: flex;
+    flex-direction: column; }
+    study #dev div {
+      border-bottom: 1px solid black; }
+  study table .add {
+    border-top: none;
+    text-align: right;
+    color: navy; }
+    study table .add:hover {
+      color: dodgerblue;
+      font-weight: 900; }
+  study table td {
+    border-top: 1px solid black; }
+    study table td span.bold {
+      font-weight: bold; }
+    study table td span.italics {
+      font-style: italic; }
   study button {
     align-self: flex-end; }
 
