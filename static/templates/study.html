@@ -9,24 +9,30 @@
 				<th></th>
 				<th></th>
 				<th>Word</th>
-				<th>Guess Meaning</th>
-				<th>Guess Meaning</th>
+				<th ng-hide="definitionsPhase">Guess Meaning</th>
+				<th ng-show="definitionsPhase">Guess Meaning</th>
+				<th ng-show="definitionsPhase">Defintions</th>
+				<th ng-show="definitionsPhase"></th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr class="lemma" ng-repeat="lemma in newWords track by $index">
-				<td class="add" ng-click="addKnownLemma(lemma)">◎</td>
-				<td class="add">[[ $index + 1 ]]</td>
+			<tr class="lemma" ng-repeat="lemma in newWords track by $index" ng-init="studied=false">
+				<td class="add no-top" ng-click="addKnownLemma(lemma)">◎</td>
+				<td class="no-top">[[ $index + 1 ]]</td>
 				<td class="lemma">[[ lemma ]]</td>
-				<td class="guess" ng-hide="definitionsPhase"><input ng-bind="guess" type="text"></td>
-				<td class="guess" ng-show="definitionsPhase">[[ guess ]]</td>
+				<td class="guess" ng-hide="definitionsPhase"><input ng-model="guess" type="text"></td>
+				<td class="guessed" ng-show="definitionsPhase">[[ guess ]]</td>
+				<td class="definition" ng-show="definitionsPhase"></td>
+				<td ng-class="{'confirm': true, 'no-top': true, 'studied': studied}" ng-show="definitionsPhase" ng-click="studied = true">◉</td>
 			</tr>				
 			<tr class="final-row">
 				<td></td>
 				<td></td>
 				<td></td>
-				<td><button>Done guessing!</button></td>
-				<td></td>
+				<td ng-hide="definitionsPhase"><button ng-click="doneGuessing()">Done guessing!</button></td>
+				<td ng-show="definitionsPhase"></td>
+				<td ng-show="definitionsPhase"></td>
+				<td ng-show="definitionsPhase"></td>
 			</tr>
 		</tbody>
 	</table>

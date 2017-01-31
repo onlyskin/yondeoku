@@ -96,14 +96,34 @@ study {
 
 		}
 
+		.no-top {
+			border-top: none;			
+		}
+
 		.add {
-			border-top: none;
 			text-align: right;
 			color: navy;
 
 			&:hover {
 				color: dodgerblue;
 			}
+		}
+
+		.confirm {
+			color: dodgerblue;
+
+			&:hover {
+				color: navy;
+			}
+		}
+
+		.studied {
+			color: black;
+		}
+
+		.guessed {
+			font-style: italic;
+			color: #ccc;
 		}
 
 		td {

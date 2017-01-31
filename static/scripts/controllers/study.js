@@ -6,6 +6,11 @@ angular.module('yondeokuApp')
 	$scope.guessPhase = true;
 	$scope.definitionsPhase = false;
 
+	$scope.doneGuessing = () => {
+		$scope.guessPhase = false;
+		$scope.definitionsPhase = true;
+	};
+
 	$scope.newWords = [];
 
 	$scope.$parent.$watch('currentBlock', () => {

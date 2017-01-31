@@ -61,12 +61,22 @@ study {
       width: 100%; }
       study table tr:last-of-type td button:hover {
         background-color: #f2f2f2; }
+  study table .no-top {
+    border-top: none; }
   study table .add {
-    border-top: none;
     text-align: right;
     color: navy; }
     study table .add:hover {
       color: dodgerblue; }
+  study table .confirm {
+    color: dodgerblue; }
+    study table .confirm:hover {
+      color: navy; }
+  study table .studied {
+    color: black; }
+  study table .guessed {
+    font-style: italic;
+    color: #ccc; }
   study table td {
     border-top: 1px solid black; }
     study table td span.bold {
