@@ -13,6 +13,8 @@
 
 button {
   background-color: #699ce8; }
+  button:hover {
+    background-color: #538de5; }
 
 user-overview {
   border: 2px solid DarkViolet;
@@ -52,13 +54,19 @@ study {
     flex-direction: column; }
     study #dev div {
       border-bottom: 1px solid black; }
+  study table tr:last-of-type td {
+    border-top: none; }
+    study table tr:last-of-type td button {
+      background-color: white;
+      width: 100%; }
+      study table tr:last-of-type td button:hover {
+        background-color: #f2f2f2; }
   study table .add {
     border-top: none;
     text-align: right;
     color: navy; }
     study table .add:hover {
-      color: dodgerblue;
-      font-weight: 900; }
+      color: dodgerblue; }
   study table td {
     border-top: 1px solid black; }
     study table td span.bold {

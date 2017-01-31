@@ -10,6 +10,7 @@
 				<th></th>
 				<th>Word</th>
 				<th>Guess Meaning</th>
+				<th>Guess Meaning</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -17,9 +18,17 @@
 				<td class="add" ng-click="addKnownLemma(lemma)">◎</td>
 				<td class="add">[[ $index + 1 ]]</td>
 				<td class="lemma">[[ lemma ]]</td>
-				<td class="guess"><input type="text"></td>
+				<td class="guess" ng-hide="definitionsPhase"><input ng-bind="guess" type="text"></td>
+				<td class="guess" ng-show="definitionsPhase">[[ guess ]]</td>
 			</tr>				
+			<tr class="final-row">
+				<td></td>
+				<td></td>
+				<td></td>
+				<td><button>Done guessing!</button></td>
+				<td></td>
+			</tr>
 		</tbody>
 	</table>
+	<button ng-click="stopReading()">Choose a different block instead...</button>
 </div>
-<button ng-click="stopReading()">Choose a different block instead...</button>
