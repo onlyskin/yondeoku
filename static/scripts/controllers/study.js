@@ -33,7 +33,9 @@ angular.module('yondeokuApp')
 	};
 
 	function getStudying() {
-		console.log('executed');
+		if ($scope.currentBlock === undefined) {
+			return [];
+		}
 		var currentBlock = $scope.currentBlock;
 		var readingPosition = currentBlock.readTokens.indexOf(false);
 		var newWords = [];
