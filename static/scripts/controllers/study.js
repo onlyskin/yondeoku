@@ -12,9 +12,12 @@ angular.module('yondeokuApp')
 		$scope.newWords = getStudying();
 	});
 
+	//watches so that we can update the newWords whenever the known words changes
+	$scope.DataServiceKnown = DataService.userdata.known;
+	$scope.$watch('DataServiceKnown', () => {$scope.newWords = getStudying();});
+
 	$scope.addKnownLemma = function(lemma) {
 		ServerService.addKnownLemma(lemma);
-		$scope.newWords = getStudying();
 	};
 
 	function isNew (lemma) {

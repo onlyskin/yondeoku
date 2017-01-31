@@ -7,7 +7,7 @@ angular.module('yondeokuApp')
 
   DataService.getUserdata();
   //just for making developing easier atm
-  $timeout(() => {$scope.currentBlock = $scope.userdata.Blocks[3]}, 100);
+  $timeout(() => {$scope.currentBlock = $scope.userdata.Blocks[1]}, 100);
 
   $scope.ServerService = ServerService;
 
