@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('yondeokuApp')
-.controller('studyCtrl', function($scope, $http, ServerService, DataService, LemmaService, $timeout) {
+.controller('studyCtrl', function($scope, $http, ServerService, DataService, LemmaService, DefinitionService, $timeout, $sce) {
 
 	$scope.guessPhase = true;
 	$scope.definitionsPhase = false;
@@ -9,6 +9,14 @@ angular.module('yondeokuApp')
 	$scope.doneGuessing = () => {
 		$scope.guessPhase = false;
 		$scope.definitionsPhase = true;
+		DefinitionService.getDefinitions($scope.newWords, renderDefinitions);
+	};
+
+	function renderDefinitions (responseJSON) {
+		let definitions = responseJSON.data;
+		for (var i in definitions) {
+			$scope.newWords[i]['definition'] = definitions[i][0];
+		}
 	};
 
 	$scope.newWords = [];
@@ -53,6 +61,7 @@ angular.module('yondeokuApp')
 			readingPosition = blob.indexOut + 1;
 
 			let filteredWords = words.filter((w) => isNew(w))
+			filteredWords = filteredWords.map((i) => {return {lemma: i}});
 			Array.prototype.push.apply(newWords, filteredWords);
 		}
 		return newWords;

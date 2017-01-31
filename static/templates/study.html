@@ -16,13 +16,13 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr class="lemma" ng-repeat="lemma in newWords track by $index" ng-init="studied=false">
-				<td class="add no-top" ng-click="addKnownLemma(lemma)">◎</td>
+			<tr class="lemma" ng-repeat="obj in newWords track by $index" ng-init="studied=false">
+				<td class="add no-top" ng-click="addKnownLemma(obj.lemma)">◎</td>
 				<td class="no-top">[[ $index + 1 ]]</td>
-				<td class="lemma">[[ lemma ]]</td>
+				<td class="lemma">[[ obj.lemma ]]</td>
 				<td class="guess" ng-hide="definitionsPhase"><input ng-model="guess" type="text"></td>
 				<td class="guessed" ng-show="definitionsPhase">[[ guess ]]</td>
-				<td class="definition" ng-show="definitionsPhase"></td>
+				<td class="definition" ng-show="definitionsPhase" ng-bind-html="obj.definition"></td>
 				<td ng-class="{'confirm': true, 'no-top': true, 'studied': studied}" ng-show="definitionsPhase" ng-click="studied = true">◉</td>
 			</tr>				
 			<tr class="final-row">
