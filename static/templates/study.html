@@ -7,13 +7,15 @@
 		<thead>
 			<tr>
 				<th></th>
+				<th></th>
 				<th>Word</th>
 				<th>Guess Meaning</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr class="lemma" ng-repeat="lemma in newWords track by $index">
-				<td class="add" ng-click="ServerService.addKnownLemma(lemma)">◎</td>
+				<td class="add">[[ $index + 1 ]]</td>
+				<td class="add" ng-click="addKnownLemma(lemma)">◎</td>
 				<td class="lemma">[[ lemma ]]</td>
 				<td class="guess"><input type="text"></td>
 			</tr>				

@@ -3,9 +3,21 @@
 angular.module('yondeokuApp')
 .controller('studyCtrl', function($scope, $http, ServerService, DataService, LemmaService, $timeout) {
 
-	$scope.ServerService = ServerService;
+	$scope.guessPhase = true;
+	$scope.definitionsPhase = false;
 
-	var isNew = function (lemma) {
+	$scope.newWords = [];
+
+	$scope.$parent.$watch('currentBlock', () => {
+		$scope.newWords = getStudying();
+	});
+
+	$scope.addKnownLemma = function(lemma) {
+		ServerService.addKnownLemma(lemma);
+		$scope.newWords = getStudying();
+	};
+
+	function isNew (lemma) {
 		var knownList = DataService.userdata.known;
 		var readDict = LemmaService.getReadLemmas(DataService.userdata);
 		var readCount = readDict[lemma]
@@ -20,7 +32,8 @@ angular.module('yondeokuApp')
 		}
 	};
 
-	var getStudying = function() {
+	function getStudying() {
+		console.log('executed');
 		var currentBlock = $scope.currentBlock;
 		var readingPosition = currentBlock.readTokens.indexOf(false);
 		var newWords = [];
@@ -35,6 +48,7 @@ angular.module('yondeokuApp')
 		return newWords;
 	};
 
+	//just for making developing easier atm
 	$timeout(() => {$scope.newWords = getStudying()}, 150);
 
 });
