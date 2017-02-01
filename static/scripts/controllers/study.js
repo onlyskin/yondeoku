@@ -57,9 +57,7 @@ angular.module('yondeokuApp')
 		$scope.guessingPhase = true;
 		$scope.definitionsPhase = false;
 		$scope.readingPhase = false;
-		$scope.currentlyReading = {in: 0, out: 0};
-		$scope.currentlyReadingSection = '';
-		$scope.newWords = getStudying();
+		recalculateReadingSection();
 	}
 
 	function renderDefinitions (responseJSON) {
@@ -67,6 +65,16 @@ angular.module('yondeokuApp')
 		for (var i in definitions) {
 			$scope.newWords[i]['definition'] = definitions[i][0];
 		}
+	};
+
+	//recalculates the variables for the reading section which depend on:
+	//1 - which Block is currently being studied
+	//2 - any changes to the user's known words
+	//3 - any changes to the read sections on any blocks
+	function recalculateReadingSection () {
+		$scope.currentlyReading = {in: 0, out: 0};
+		$scope.currentlyReadingSection = '';
+		$scope.newWords = getNewWordsAndSetReadingSection();
 	};
 
 	$scope.newWords = [];
@@ -91,15 +99,11 @@ angular.module('yondeokuApp')
 		$scope.guessingPhase = true;
 		$scope.definitionsPhase = false;
 		$scope.readingPhase = false;
-		$scope.currentlyReading = {in: 0, out: 0};
-		$scope.currentlyReadingSection = '';
-		$scope.newWords = getStudying();
+		recalculateReadingSection();
 	});
 
 	$scope.$watchCollection('userdata', () => {
-		$scope.currentlyReading = {in: 0, out: 0};
-		$scope.currentlyReadingSection = '';
-		$scope.newWords = getStudying();
+		recalculateReadingSection();
 	});
 
 	$scope.addKnownLemma = function(lemma) {
@@ -121,7 +125,7 @@ angular.module('yondeokuApp')
 		}
 	};
 
-	function getStudying() {
+	function getNewWordsAndSetReadingSection() {
 		if ($scope.currentBlock === undefined) {
 			return [];
 		}
@@ -143,6 +147,6 @@ angular.module('yondeokuApp')
 	};
 
 	//just for making developing easier atm
-	$timeout(() => {$scope.newWords = getStudying()}, 150);
+	$timeout(() => {$scope.newWords = getNewWordsAndSetReadingSection()}, 150);
 
 });
