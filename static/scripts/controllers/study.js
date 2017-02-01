@@ -3,6 +3,39 @@
 angular.module('yondeokuApp')
 .controller('studyCtrl', function($scope, $http, ServerService, DataService, LemmaService, DefinitionService, $timeout, $sce) {
 
+	$scope.userdata = DataService.userdata;
+
+	DataService.getUserdata();
+	//just for making developing easier atm
+	$timeout(() => {$scope.currentBlock = $scope.userdata.Blocks[0]}, 100);
+
+	$scope.ServerService = ServerService;
+
+//	$scope.overviewMode = false;
+//	$scope.readingMode = true;
+
+	$scope.setCurrentBlock = function(Block) {
+		$scope.currentBlock = Block;
+	};
+
+	$scope.renderBlockButton = function(Block) {
+		return Block.text.slice(0, 20) + '...';
+	};
+
+	$scope.getBlockIndex = function(Block) {
+		return $scope.userdata.Blocks.indexOf(Block);
+	};
+
+	$scope.startReading = function () {
+		$scope.overviewMode = false;
+		$scope.readingMode = true;
+	};
+
+	$scope.stopReading = function () {
+		$scope.overviewMode = true;
+		$scope.readingMode = false;
+	};
+
 	$scope.guessingPhase = true;
 	$scope.definitionsPhase = false;
 	$scope.readingPhase = false;
@@ -54,7 +87,7 @@ angular.module('yondeokuApp')
 		return section;
 	};
 
-	$scope.$parent.$watch('currentBlock', () => {
+	$scope.$watchCollection('currentBlock', () => {
 		$scope.guessingPhase = true;
 		$scope.definitionsPhase = false;
 		$scope.readingPhase = false;
@@ -63,14 +96,11 @@ angular.module('yondeokuApp')
 		$scope.newWords = getStudying();
 	});
 
-/*	$scope.$watch('currentlyReading', () => {
-		$scope.currentlyReadingSection = renderCurrentlyReadingSection();
-	})
-*/
-
-	//watches so that we can update the newWords whenever the known words changes
-	$scope.DataServiceKnown = DataService.userdata.known;
-	$scope.$watch('DataServiceKnown', () => {$scope.newWords = getStudying();});
+	$scope.$watchCollection('userdata', () => {
+		$scope.currentlyReading = {in: 0, out: 0};
+		$scope.currentlyReadingSection = '';
+		$scope.newWords = getStudying();
+	});
 
 	$scope.addKnownLemma = function(lemma) {
 		ServerService.addKnownLemma(lemma);
@@ -96,7 +126,6 @@ angular.module('yondeokuApp')
 			return [];
 		}
 		let readingPosition = $scope.currentBlock.readTokens.indexOf(false);
-		console.log($scope.currentBlock);
 		$scope.currentlyReading['in'] = readingPosition;
 		let readingPositionOut = $scope.currentBlock.readTokens.indexOf(false);
 		let newWords = [];
