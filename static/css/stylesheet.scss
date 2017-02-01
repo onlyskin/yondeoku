@@ -1,9 +1,20 @@
+@font-face {
+    font-family: 'Vollkorn';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Vollkorn'), url('Vollkorn-Regular.ttf');
+}
+
 @mixin setBgColorAndHover($baseColor) {
 	background-color: $baseColor;
 	
 	&:hover {
 		background-color: darken($baseColor, 5%);
 	}
+}
+
+body {
+    font-family: 'Vollkorn', serif;
 }
 
 #filler {

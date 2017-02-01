@@ -1,3 +1,11 @@
+@font-face {
+  font-family: 'Vollkorn';
+  font-style: normal;
+  font-weight: 400;
+  src: local("Vollkorn"), url("Vollkorn-Regular.ttf"); }
+body {
+  font-family: 'Vollkorn', serif; }
+
 #filler {
   height: 20px; }
 

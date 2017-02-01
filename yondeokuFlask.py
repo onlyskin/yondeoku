@@ -31,7 +31,7 @@ polishLemmatizer = Lemmatizer(u'lemmaDict.json')
 
 @app.route('/')
 def index():
-	return render_template('studying.html')
+	return render_template('index.html')
 
 @app.route('/old')
 def old():

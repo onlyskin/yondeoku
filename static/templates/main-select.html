@@ -1,0 +1,12 @@
+<user-overview>
+	<div id="userInfo">
+		<h3>[[ userdata.username ]]</h3>
+		<div ng-repeat="Block in userdata.Blocks" class="block">
+			<div>[[ getBlockIndex(Block) + 1 ]]</div>
+			<button ng-click="setCurrentBlock(Block)">[[ renderBlockButton(Block) ]]</button>
+		</div>
+	</div>
+	<div id="blockText">[[ currentBlock.text ]]
+		<button ng-click="startReading()">Read This Text</button>
+	</div>
+</user-overview>
