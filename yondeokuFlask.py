@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 import json
 import os
-import jsonpickle
+import jsonpickle	
 
 from yondeoku.polish.User import User
 from yondeoku.polish.Block import Block
@@ -129,7 +129,7 @@ def setReadTokens(username):
 	readValue = JSON['readValue']
 	currentUser = User.loadUserDataFromPickle(username)
 	activeBlock = next(Block for Block in currentUser.Blocks if Block.text == blockText)
-	for i, value in enumerate(activeBlock.readTokens()):
+	for i, value in enumerate(activeBlock.readTokens):
 		if i >= readIn and i < readOut:
 			activeBlock.readTokens[i] = readValue
 	currentUser.saveUserDataToPickle()

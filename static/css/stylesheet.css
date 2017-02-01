@@ -1,5 +1,5 @@
 #filler {
-  height: 100px; }
+  height: 20px; }
 
 #page {
   display: flex;
@@ -90,9 +90,13 @@ dev-stats {
   border: 2px solid Maroon;
   padding: 10px;
   margin: 2px; }
+  dev-stats .headerText {
+    font-weight: 800; }
   dev-stats .blocks {
     padding: 3px;
     padding-left: 10px;
     font-family: monospace; }
+  dev-stats .blockText .read {
+    color: red; }
 
 /*# sourceMappingURL=stylesheet.css.map */

@@ -7,7 +7,7 @@
 }
 
 #filler {
-	height: 100px;
+	height: 20px;
 }
 
 #page {
@@ -148,9 +148,20 @@ dev-stats {
 	padding: 10px;
 	margin: 2px;
 
+	.headerText {
+		font-weight: 800;
+	}
+
 	.blocks {
 		padding: 3px;
 		padding-left: 10px;
 		font-family: monospace;
 	}
+
+	.blockText {
+		.read {
+			color: red;
+		}
+	}
+
 }

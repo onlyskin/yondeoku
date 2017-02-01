@@ -1,9 +1,13 @@
 <div ng-controller="studyCtrl" id="studyContainer">
+<!--
 	<div id="dev">
 		<div>[[ currentBlock.text ]]</div>
 		<div>[[ currentBlock.readTokens ]]</div>
+		<div>[[ currentlyReadingSection ]]</div>
 	</div>
-	<table id="vocabItems">
+-->
+	<button ng-click="stopReading()">Choose a different block instead...</button>
+	<table ng-hide="readingPhase" id="vocabItems">
 		<thead>
 			<tr>
 				<th></th>
@@ -31,10 +35,12 @@
 				<td></td>
 				<td ng-hide="definitionsPhase"><button ng-click="doneGuessing()">Done guessing!</button></td>
 				<td ng-show="definitionsPhase"></td>
-				<td ng-show="definitionsPhase"></td>
+				<td ng-show="definitionsPhase" ng-click="doneStudying()"><button>Done studying, read!</button></td>
 				<td ng-show="definitionsPhase"></td>
 			</tr>
 		</tbody>
 	</table>
-	<button ng-click="stopReading()">Choose a different block instead...</button>
+	<div>[[ renderPreviousSection() ]]</div>
+	<div id="reading">[[ currentlyReadingSection ]]</div>
+	<button ng-click="doneReading()">Read. Read next section.</button>
 </div>

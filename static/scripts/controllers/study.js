@@ -3,14 +3,31 @@
 angular.module('yondeokuApp')
 .controller('studyCtrl', function($scope, $http, ServerService, DataService, LemmaService, DefinitionService, $timeout, $sce) {
 
-	$scope.guessPhase = true;
+	$scope.guessingPhase = true;
 	$scope.definitionsPhase = false;
+	$scope.readingPhase = false;
 
 	$scope.doneGuessing = () => {
-		$scope.guessPhase = false;
+		$scope.guessingPhase = false;
 		$scope.definitionsPhase = true;
 		DefinitionService.getDefinitions($scope.newWords, renderDefinitions);
 	};
+
+	$scope.doneStudying = () => {
+		$scope.definitionsPhase = false;
+		$scope.readingPhase = true;
+		$scope.currentlyReadingSection = renderCurrentlyReadingSection();
+	};
+
+	$scope.doneReading = () => {
+		ServerService.setRead($scope.currentBlock.text, $scope.currentlyReading.in, $scope.currentlyReading.out + 1);
+		$scope.guessingPhase = true;
+		$scope.definitionsPhase = false;
+		$scope.readingPhase = false;
+		$scope.currentlyReading = {in: 0, out: 0};
+		$scope.currentlyReadingSection = '';
+		$scope.newWords = getStudying();
+	}
 
 	function renderDefinitions (responseJSON) {
 		let definitions = responseJSON.data;
@@ -20,10 +37,36 @@ angular.module('yondeokuApp')
 	};
 
 	$scope.newWords = [];
+	$scope.currentlyReading = {in: 0, out: 0};
+	$scope.currentlyReadingSection = '';
+
+	function renderPreviousSection () {
+		let section = $scope.currentBlock.tokens.slice(0, $scope.currentlyReading.in).map((token) => {
+			return token.tokenText;
+		}).join(' ');
+		return section;		
+	};
+
+	function renderCurrentlyReadingSection () {
+		let section = $scope.currentBlock.tokens.slice($scope.currentlyReading.in, $scope.currentlyReading.out + 1).map((token) => {
+			return token.tokenText;
+		}).join(' ');
+		return section;
+	};
 
 	$scope.$parent.$watch('currentBlock', () => {
+		$scope.guessingPhase = true;
+		$scope.definitionsPhase = false;
+		$scope.readingPhase = false;
+		$scope.currentlyReading = {in: 0, out: 0};
+		$scope.currentlyReadingSection = '';
 		$scope.newWords = getStudying();
 	});
+
+/*	$scope.$watch('currentlyReading', () => {
+		$scope.currentlyReadingSection = renderCurrentlyReadingSection();
+	})
+*/
 
 	//watches so that we can update the newWords whenever the known words changes
 	$scope.DataServiceKnown = DataService.userdata.known;
@@ -52,13 +95,16 @@ angular.module('yondeokuApp')
 		if ($scope.currentBlock === undefined) {
 			return [];
 		}
-		var currentBlock = $scope.currentBlock;
-		var readingPosition = currentBlock.readTokens.indexOf(false);
-		var newWords = [];
+		let readingPosition = $scope.currentBlock.readTokens.indexOf(false);
+		console.log($scope.currentBlock);
+		$scope.currentlyReading['in'] = readingPosition;
+		let readingPositionOut = $scope.currentBlock.readTokens.indexOf(false);
+		let newWords = [];
 		while (newWords.length < 10) {
-			let blob = LemmaService.getNextBlob(currentBlock, readingPosition);
-			let words = currentBlock.bestLemmaList.slice(blob.indexIn, blob.indexOut + 1)
+			let blob = LemmaService.getNextBlob($scope.currentBlock, readingPosition);
+			let words = $scope.currentBlock.bestLemmaList.slice(blob.indexIn, blob.indexOut + 1)
 			readingPosition = blob.indexOut + 1;
+			$scope.currentlyReading['out'] = blob.indexOut;
 
 			let filteredWords = words.filter((w) => isNew(w))
 			filteredWords = filteredWords.map((i) => {return {lemma: i}});
