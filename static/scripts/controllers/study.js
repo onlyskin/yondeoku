@@ -11,9 +11,6 @@ angular.module('yondeokuApp')
 
 	$scope.ServerService = ServerService;
 
-//	$scope.overviewMode = false;
-//	$scope.readingMode = true;
-
 	$scope.setCurrentBlock = function(Block) {
 		$scope.currentBlock = Block;
 	};
@@ -24,16 +21,6 @@ angular.module('yondeokuApp')
 
 	$scope.getBlockIndex = function(Block) {
 		return $scope.userdata.Blocks.indexOf(Block);
-	};
-
-	$scope.startReading = function () {
-		$scope.overviewMode = false;
-		$scope.readingMode = true;
-	};
-
-	$scope.stopReading = function () {
-		$scope.overviewMode = true;
-		$scope.readingMode = false;
 	};
 
 	$scope.guessingPhase = true;
@@ -136,11 +123,22 @@ angular.module('yondeokuApp')
 		while (newWords.length < 10) {
 			let blob = LemmaService.getNextBlob($scope.currentBlock, readingPosition);
 			let words = $scope.currentBlock.bestLemmaList.slice(blob.indexIn, blob.indexOut + 1)
-			readingPosition = blob.indexOut + 1;
-			$scope.currentlyReading['out'] = blob.indexOut;
 
 			let filteredWords = words.filter((w) => isNew(w))
 			filteredWords = filteredWords.map((i) => {return {lemma: i}});
+
+			//if there is something in newWords already, then we'll make sure the next
+			//sentence doesn't make it go over 10 and if it does just return the current
+			//newWords instead of adding this one
+			if (newWords.length !== 0) {
+				if (newWords.length + filteredWords.length > 10) {
+					return newWords;
+				}
+			}
+
+			//otherwise we need to add it even if it makes it exceed 10
+			readingPosition = blob.indexOut + 1;
+			$scope.currentlyReading['out'] = blob.indexOut;
 			Array.prototype.push.apply(newWords, filteredWords);
 		}
 		return newWords;

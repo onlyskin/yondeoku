@@ -43,23 +43,26 @@ user-overview {
 
 	display: flex;
 
-	#userInfo {
+	#userMeta {
 		display: flex;
 		flex-direction: column;
+
 		border: 1px solid black;
 		padding: 10px;
 		margin: 2px;
+
+		#knownWords {
+			width: 20em;
+			column-count: 3;
+		}
 
 		.block {
 			display: flex;
 		}
 
-		button {
-			width: 200px;
-		}
 	}
 
-	#blockText {
+	#blockInfo {
 		display: flex;
 		flex-direction: column;
 
@@ -69,19 +72,40 @@ user-overview {
 		padding: 10px;
 		margin: 2px;
 	
-		button {
-			width: 200px;
-			align-self: flex-end;
+		.note {
+			color: red;
+		}
+
+		.blocks {
+			padding: 10px;
+			font-family: monospace;
+			border-bottom: 1px solid black;
+
+			&:last-of-type {
+				border-bottom: none;
+			}
+
+			display: flex;
+			flex-direction: column;
+
+			.blockText {
+				.read {
+					color: red;
+				}
+			}
+
+			a {
+				align-self: flex-end;
+			}
 		}
 	}
+
 }
 
 study {
-	border: 2px solid RoyalBlue;
-	padding: 2px;
-	margin: 2px;
-
 	#studyContainer {
+		border: 2px solid DarkViolet;
+		margin: 2px;
 		display: flex;
 		flex-direction: column;
 	}

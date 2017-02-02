@@ -1,12 +1,21 @@
 <user-overview>
-	<div id="userInfo">
-		<h3>[[ userdata.username ]]</h3>
-		<div ng-repeat="Block in userdata.Blocks" class="block">
-			<div>[[ getBlockIndex(Block) + 1 ]]</div>
-			<button ng-click="setCurrentBlock(Block)">[[ renderBlockButton(Block) ]]</button>
-		</div>
+	<div id="userMeta">
+		<h3>Username: [[ userdata.username ]]</h3>
+		<p title="These are the words that you have marked as definitely known while reading texts.">Known words: ([[ userdata.known.length ]])
+			<div id="knownWords">
+				<div ng-repeat="word in userdata.known.sort()">[[ word ]]</div>
+			</div>
+		</p>
+		<p title="After this numer of encounters of a given word, it will no longer appear in your vocab lists.">Threshold: [[ userdata.threshold ]]</p>
 	</div>
-	<div id="blockText">[[ currentBlock.text ]]
-		<button ng-click="startReading()">Read This Text</button>
+	<div id="blockInfo">
+		<div>The current texts you have are: <span class="note">(read sections marked in red)</span></div>
+		<div ng-repeat="Block in userdata.Blocks" class="blocks">
+			<div class="headerText">[[ getBlockIndex(Block) + 1 ]]) [[ Block.text.slice(0, 50) ]]...</div>
+			<div class="blockText">
+				<span ng-init="read=Block.readTokens[$index]" ng-class="{'read': read}" ng-repeat="Token in Block.tokens track by $index">[[ Token.tokenText ]] </span>
+			</div>
+			<a ng-click="setCurrentBlock(Block)" href="/#/main/study">Read This Text</a>
+		</div>
 	</div>
 </user-overview>

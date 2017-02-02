@@ -28,17 +28,18 @@ user-overview {
   border: 2px solid DarkViolet;
   margin: 2px;
   display: flex; }
-  user-overview #userInfo {
+  user-overview #userMeta {
     display: flex;
     flex-direction: column;
     border: 1px solid black;
     padding: 10px;
     margin: 2px; }
-    user-overview #userInfo .block {
+    user-overview #userMeta #knownWords {
+      width: 20em;
+      column-count: 3; }
+    user-overview #userMeta .block {
       display: flex; }
-    user-overview #userInfo button {
-      width: 200px; }
-  user-overview #blockText {
+  user-overview #blockInfo {
     display: flex;
     flex-direction: column;
     white-space: pre-wrap;
@@ -46,53 +47,62 @@ user-overview {
     border: 1px solid black;
     padding: 10px;
     margin: 2px; }
-    user-overview #blockText button {
-      width: 200px;
-      align-self: flex-end; }
+    user-overview #blockInfo .note {
+      color: red; }
+    user-overview #blockInfo .blocks {
+      padding: 10px;
+      font-family: monospace;
+      border-bottom: 1px solid black;
+      display: flex;
+      flex-direction: column; }
+      user-overview #blockInfo .blocks:last-of-type {
+        border-bottom: none; }
+      user-overview #blockInfo .blocks .blockText .read {
+        color: red; }
+      user-overview #blockInfo .blocks a {
+        align-self: flex-end; }
 
-study {
-  border: 2px solid RoyalBlue;
-  padding: 2px;
-  margin: 2px; }
-  study #studyContainer {
-    display: flex;
-    flex-direction: column; }
-  study #dev {
-    display: flex;
-    flex-direction: column; }
-    study #dev div {
-      border-bottom: 1px solid black; }
-  study table tr:last-of-type td {
-    border-top: none; }
-    study table tr:last-of-type td button {
-      background-color: white;
-      width: 100%; }
-      study table tr:last-of-type td button:hover {
-        background-color: #f2f2f2; }
-  study table .no-top {
-    border-top: none; }
-  study table .add {
-    text-align: right;
-    color: navy; }
-    study table .add:hover {
-      color: dodgerblue; }
-  study table .confirm {
+study #studyContainer {
+  border: 2px solid DarkViolet;
+  margin: 2px;
+  display: flex;
+  flex-direction: column; }
+study #dev {
+  display: flex;
+  flex-direction: column; }
+  study #dev div {
+    border-bottom: 1px solid black; }
+study table tr:last-of-type td {
+  border-top: none; }
+  study table tr:last-of-type td button {
+    background-color: white;
+    width: 100%; }
+    study table tr:last-of-type td button:hover {
+      background-color: #f2f2f2; }
+study table .no-top {
+  border-top: none; }
+study table .add {
+  text-align: right;
+  color: navy; }
+  study table .add:hover {
     color: dodgerblue; }
-    study table .confirm:hover {
-      color: navy; }
-  study table .studied {
-    color: black; }
-  study table .guessed {
-    font-style: italic;
-    color: #ccc; }
-  study table td {
-    border-top: 1px solid black; }
-    study table td span.bold {
-      font-weight: bold; }
-    study table td span.italics {
-      font-style: italic; }
-  study button {
-    align-self: flex-end; }
+study table .confirm {
+  color: dodgerblue; }
+  study table .confirm:hover {
+    color: navy; }
+study table .studied {
+  color: black; }
+study table .guessed {
+  font-style: italic;
+  color: #ccc; }
+study table td {
+  border-top: 1px solid black; }
+  study table td span.bold {
+    font-weight: bold; }
+  study table td span.italics {
+    font-style: italic; }
+study button {
+  align-self: flex-end; }
 
 dev-stats {
   border: 2px solid Maroon;

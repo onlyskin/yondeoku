@@ -1,13 +1,6 @@
 <study>
 	<div id="studyContainer">
-	<!--
-		<div id="dev">
-			<div>[[ currentBlock.text ]]</div>
-			<div>[[ currentBlock.readTokens ]]</div>
-			<div>[[ currentlyReadingSection ]]</div>
-		</div>
-	-->
-		<button ng-click="stopReading()">Choose a different block instead...</button>
+		<a href="#/main/select">Choose a different block instead...</a>
 		<table ng-hide="readingPhase" id="vocabItems">
 			<thead>
 				<tr>
@@ -43,6 +36,7 @@
 		</table>
 		<div>[[ renderPreviousSection() ]]</div>
 		<div id="reading">[[ currentlyReadingSection ]]</div>
+		<!--FIGURE OUT HOW TO GET DONEREADING CALLBACK WORKING-->
 		<button ng-click="doneReading()">Read. Read next section.</button>
 	</div>
 </study>
