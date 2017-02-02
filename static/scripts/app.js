@@ -13,12 +13,18 @@ angular.module('yondeokuApp').config(function($interpolateProvider, $stateProvid
 		.state({name: 'select',
 				parent: 'main',
 				url: '/select',
-				templateUrl: 'static/templates/main-select.html',
+				templateUrl: 'static/templates/main-select.html'
 		})
 		.state({name: 'study',
 				parent: 'main',
 				url: '/study',
-				templateUrl: 'static/templates/main-study.html',
+				templateUrl: 'static/templates/main-study.html'
+		})
+		.state({name: 'add',
+				parent: 'main',
+				url: '/add',
+				templateUrl: 'static/templates/main-add.html',
+				controller: 'editCtrl'
 		});
 
 	$urlRouterProvider.otherwise('main/select');

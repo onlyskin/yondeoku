@@ -13,6 +13,14 @@
 	}
 }
 
+@mixin setTextColorAndHover($baseColor) {
+	color: $baseColor;
+	
+	&:hover {
+		color: darken($baseColor, 20%);
+	}
+}
+
 body {
     font-family: 'Vollkorn', serif;
     background-color: black;
@@ -42,6 +50,13 @@ user-overview {
 	margin: 2px;
 
 	display: flex;
+
+	#addBlock {
+		align-self: flex-end;
+		text-decoration: none;
+		@include setTextColorAndHover(cornflowerblue);
+		padding: 10px;
+	}
 
 	#userMeta {
 		width: 30%;
@@ -103,6 +118,7 @@ user-overview {
 
 			a {
 				align-self: flex-end;
+				padding: 5px;
 			}
 		}
 	}
@@ -208,4 +224,33 @@ dev-stats {
 		}
 	}
 
+}
+
+add {
+	background-color: white;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	a {
+		align-self: flex-end;
+		text-decoration: none;
+		@include setTextColorAndHover(cornflowerblue);
+		padding: 10px;
+	}
+
+	#addBlockContainer {
+		width: 50%;
+
+		display: flex;
+		flex-direction: column;
+
+		textarea {
+			margin-bottom: 1em;
+			width: 100%;
+			height: 90vh;
+			border: 2px solid black;
+		}
+
+	}
 }

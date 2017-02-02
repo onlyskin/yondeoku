@@ -9,6 +9,12 @@ angular.module('yondeokuApp')
 	DataService.getUserdata();
 
 	$scope.ServerService = ServerService;
+	$scope.safeDeleteBlock = function(blockText) {
+		let r = confirm("Are you sure you want to delete this text?");
+		if (r === true) {
+			ServerService.deleteBlock(blockText);
+		}
+	};
 
 	$scope.setCurrentBlock = function(Block) {
 		$scope.currentBlock = Block;
