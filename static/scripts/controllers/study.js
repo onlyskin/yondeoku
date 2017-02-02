@@ -3,11 +3,10 @@
 angular.module('yondeokuApp')
 .controller('studyCtrl', function($scope, $http, ServerService, DataService, LemmaService, DefinitionService, $timeout, $sce) {
 
+	$scope.currentBlock = null;
 	$scope.userdata = DataService.userdata;
 
 	DataService.getUserdata();
-	//just for making developing easier atm
-	$timeout(() => {$scope.currentBlock = $scope.userdata.Blocks[0]}, 100);
 
 	$scope.ServerService = ServerService;
 
@@ -21,6 +20,16 @@ angular.module('yondeokuApp')
 
 	$scope.getBlockIndex = function(Block) {
 		return $scope.userdata.Blocks.indexOf(Block);
+	};
+
+	function getBlockIndexFromText (blockText) {
+		let blockTextMap = $scope.userdata.Blocks.map((i) => i.text);
+		return blockTextMap.indexOf(blockText);
+	}
+
+	function relinkCurrentBlock() {
+		let i = getBlockIndexFromText($scope.currentBlock.text);
+		$scope.currentBlock = $scope.userdata.Blocks[i];
 	};
 
 	$scope.guessingPhase = true;
@@ -41,10 +50,12 @@ angular.module('yondeokuApp')
 
 	$scope.doneReading = () => {
 		ServerService.setRead($scope.currentBlock.text, $scope.currentlyReading.in, $scope.currentlyReading.out + 1);
-		$scope.guessingPhase = true;
-		$scope.definitionsPhase = false;
-		$scope.readingPhase = false;
-		recalculateReadingSection();
+		$timeout(() => {
+			$scope.guessingPhase = true;
+			$scope.definitionsPhase = false;
+			$scope.readingPhase = false;
+			recalculateReadingSection();			
+		}, 100)
 	}
 
 	function renderDefinitions (responseJSON) {
@@ -69,6 +80,9 @@ angular.module('yondeokuApp')
 	$scope.currentlyReadingSection = '';
 
 	function renderPreviousSection () {
+		if ($scope.currentBlock === null) {
+			return '';
+		}
 		let section = $scope.currentBlock.tokens.slice(0, $scope.currentlyReading.in).map((token) => {
 			return token.tokenText;
 		}).join(' ');
@@ -76,6 +90,9 @@ angular.module('yondeokuApp')
 	};
 
 	function renderCurrentlyReadingSection () {
+		if ($scope.currentBlock === null) {
+			return '';
+		}
 		let section = $scope.currentBlock.tokens.slice($scope.currentlyReading.in, $scope.currentlyReading.out + 1).map((token) => {
 			return token.tokenText;
 		}).join(' ');
@@ -91,6 +108,7 @@ angular.module('yondeokuApp')
 
 	$scope.$watchCollection('userdata', () => {
 		recalculateReadingSection();
+		relinkCurrentBlock();
 	});
 
 	$scope.addKnownLemma = function(lemma) {
@@ -113,7 +131,7 @@ angular.module('yondeokuApp')
 	};
 
 	function getNewWordsAndSetReadingSection() {
-		if ($scope.currentBlock === undefined) {
+		if ($scope.currentBlock === null) {
 			return [];
 		}
 		let readingPosition = $scope.currentBlock.readTokens.indexOf(false);
@@ -143,8 +161,5 @@ angular.module('yondeokuApp')
 		}
 		return newWords;
 	};
-
-	//just for making developing easier atm
-	$timeout(() => {$scope.newWords = getNewWordsAndSetReadingSection()}, 150);
 
 });

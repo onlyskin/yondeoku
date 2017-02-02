@@ -4,7 +4,8 @@
   font-weight: 400;
   src: local("Vollkorn"), url("Vollkorn-Regular.ttf"); }
 body {
-  font-family: 'Vollkorn', serif; }
+  font-family: 'Vollkorn', serif;
+  background-color: black; }
 
 #filler {
   height: 20px; }
@@ -25,10 +26,11 @@ button {
     background-color: #538de5; }
 
 user-overview {
-  border: 2px solid DarkViolet;
   margin: 2px;
   display: flex; }
   user-overview #userMeta {
+    width: 30%;
+    background-color: white;
     display: flex;
     flex-direction: column;
     border: 1px solid black;
@@ -40,6 +42,8 @@ user-overview {
     user-overview #userMeta .block {
       display: flex; }
   user-overview #blockInfo {
+    width: 70%;
+    background-color: white;
     display: flex;
     flex-direction: column;
     white-space: pre-wrap;
@@ -50,6 +54,7 @@ user-overview {
     user-overview #blockInfo .note {
       color: red; }
     user-overview #blockInfo .blocks {
+      user-select: none;
       padding: 10px;
       font-family: monospace;
       border-bottom: 1px solid black;
@@ -63,8 +68,9 @@ user-overview {
         align-self: flex-end; }
 
 study #studyContainer {
-  border: 2px solid DarkViolet;
+  background-color: white;
   margin: 2px;
+  padding: 10px;
   display: flex;
   flex-direction: column; }
 study #dev {

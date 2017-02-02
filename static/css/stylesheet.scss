@@ -15,6 +15,7 @@
 
 body {
     font-family: 'Vollkorn', serif;
+    background-color: black;
 }
 
 #filler {
@@ -38,12 +39,14 @@ button {
 }
 
 user-overview {
-	border: 2px solid DarkViolet;
 	margin: 2px;
 
 	display: flex;
 
 	#userMeta {
+		width: 30%;
+
+		background-color: white;
 		display: flex;
 		flex-direction: column;
 
@@ -63,6 +66,9 @@ user-overview {
 	}
 
 	#blockInfo {
+		width: 70%;
+
+		background-color: white;
 		display: flex;
 		flex-direction: column;
 
@@ -77,6 +83,7 @@ user-overview {
 		}
 
 		.blocks {
+			user-select: none;
 			padding: 10px;
 			font-family: monospace;
 			border-bottom: 1px solid black;
@@ -104,8 +111,10 @@ user-overview {
 
 study {
 	#studyContainer {
-		border: 2px solid DarkViolet;
+		background-color: white;
 		margin: 2px;
+		padding: 10px;
+
 		display: flex;
 		flex-direction: column;
 	}

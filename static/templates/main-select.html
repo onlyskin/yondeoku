@@ -9,10 +9,10 @@
 		<p title="After this numer of encounters of a given word, it will no longer appear in your vocab lists.">Threshold: [[ userdata.threshold ]]</p>
 	</div>
 	<div id="blockInfo">
-		<div>The current texts you have are: <span class="note">(read sections marked in red)</span></div>
-		<div ng-repeat="Block in userdata.Blocks" class="blocks">
-			<div class="headerText">[[ getBlockIndex(Block) + 1 ]]) [[ Block.text.slice(0, 50) ]]...</div>
-			<div class="blockText">
+		<div>The current texts you have are: <span class="note">(click to expand, read sections marked in red)</span></div>
+		<div ng-init="expanded=false" ng-repeat="Block in userdata.Blocks" class="blocks">
+			<div ng-click="expanded=!expanded" class="headerText">[[ getBlockIndex(Block) + 1 ]]) [[ Block.text.slice(0, 50) ]]...</div>
+			<div ng-show="expanded" class="blockText">
 				<span ng-init="read=Block.readTokens[$index]" ng-class="{'read': read}" ng-repeat="Token in Block.tokens track by $index">[[ Token.tokenText ]] </span>
 			</div>
 			<a ng-click="setCurrentBlock(Block)" href="/#/main/study">Read This Text</a>
