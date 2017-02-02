@@ -107,8 +107,8 @@ angular.module('yondeokuApp')
 	});
 
 	$scope.$watchCollection('userdata', () => {
-		recalculateReadingSection();
 		relinkCurrentBlock();
+		recalculateReadingSection();
 	});
 
 	$scope.addKnownLemma = function(lemma) {
