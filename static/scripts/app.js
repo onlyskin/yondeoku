@@ -13,7 +13,8 @@ angular.module('yondeokuApp').config(function($interpolateProvider, $stateProvid
 		.state({name: 'select',
 				parent: 'main',
 				url: '/select',
-				templateUrl: 'static/templates/main-select.html'
+				templateUrl: 'static/templates/main-select.html',
+				controller: 'selectCtrl'
 		})
 		.state({name: 'study',
 				parent: 'main',

@@ -1,7 +1,11 @@
 <add>
 	<div id="addBlockContainer">
 		<p>Paste your new text into the box below:</p>
-		<a href="/#/main/select" ng-click="addBlock(newBlockText)">Add</a>
+
+		<div id="buttonContainer">
+			<a href="/#/main/select" ng-click="addBlock(newBlockText)">Add Text</a>
+			<a href="/#/main/select">Back to User Page</a>
+		</div>
 		<textarea ng-model="newBlockText"></textarea>
 	</div>
 </add>

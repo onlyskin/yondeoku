@@ -1,3 +1,8 @@
+Bugs from use:
+- form needs to clear last guesses
+- the ability to click to link to another dictionary would be good
+- the ability to replace definition with own as well (keep json cache?)
+
 BACK END APIs to IMPLEMENT:
 ⚪- get lektorek definition for list of words
 ⚪- get lektorek definition for single word

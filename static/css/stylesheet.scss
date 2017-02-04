@@ -1,3 +1,7 @@
+*, *:before, *:after {
+	box-sizing: border-box;
+}
+
 @font-face {
     font-family: 'Vollkorn';
     font-style: normal;
@@ -53,9 +57,12 @@ user-overview {
 
 	#addBlock {
 		align-self: flex-end;
+
 		text-decoration: none;
-		@include setTextColorAndHover(cornflowerblue);
-		padding: 10px;
+		border: 2px solid;
+		border-radius: 5px;
+		padding: 5px 4px 4px;
+		color: black;
 	}
 
 	#userMeta {
@@ -70,8 +77,9 @@ user-overview {
 		margin: 2px;
 
 		#knownWords {
-			width: 20em;
-			column-count: 3;
+			font-size: 12px;
+			width: 100%;
+			column-count: 4;
 		}
 
 		.block {
@@ -116,6 +124,11 @@ user-overview {
 				}
 			}
 
+			.percent {
+				align-self: flex-end;
+				text-align: right;
+			}
+
 			a {
 				align-self: flex-end;
 				padding: 5px;
@@ -141,6 +154,16 @@ study {
 
 		div {
 			border-bottom: 1px solid black;
+		}
+	}
+
+	#reading {
+		white-space: pre-wrap;
+		text-align: justify;
+		width: 40%;
+
+		span {
+			color: #ccc;
 		}
 	}
 
@@ -232,11 +255,22 @@ add {
 	flex-direction: column;
 	align-items: center;
 
-	a {
+	#buttonContainer {		
 		align-self: flex-end;
-		text-decoration: none;
-		@include setTextColorAndHover(cornflowerblue);
-		padding: 10px;
+
+		display: flex;
+		flex-direction: column;
+
+		a {
+			text-align: right;
+
+			text-decoration: none;
+			border: 2px solid;
+			border-radius: 5px;
+			padding: 5px 4px 4px;
+			color: black;
+			margin-bottom: 1em;
+		}
 	}
 
 	#addBlockContainer {
@@ -250,6 +284,7 @@ add {
 			width: 100%;
 			height: 90vh;
 			border: 2px solid black;
+			border-radius: 5px;
 		}
 
 	}
