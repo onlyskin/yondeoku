@@ -27,6 +27,24 @@ class UserEncoder(json.JSONEncoder):
                 "known": obj.known,
                 "threshold": obj.threshold
             }
+        if isinstance(obj, jBlock):
+            return {
+                "text": obj.text,
+                "sentences": obj.sentences,
+                "readSentences": obj.readSentences
+            }
+        if isinstance(obj, Sentence):
+            return {
+                "index": obj.index,
+                "length": obj.length,
+                "text": obj.text,
+                "tokens": obj.tokens
+            }
+        if isinstance(obj, EdictEntry):
+            return {
+                "japanese": obj.japanese,
+                "glosses": obj.glosses
+            }
         if isinstance(obj, set):
             return list(obj)
         return super(UserEncoder, self).default(obj)

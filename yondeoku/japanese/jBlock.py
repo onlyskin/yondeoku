@@ -1,16 +1,12 @@
 #! /usr/bin/env python                                                        
 # -*- coding: utf-8 -*-
 
-from jNlp.jTokenize import jTokenize
-
 class jBlock(object):
 
 	def __init__(self, text):
 		self.text = text
-		self.tokens = self.makeTokens(text)
-		self.lemmaList = self.tokens
-		self.bestLemmaList = self.tokens
-		self.readTokens = [False] * len(self.tokens)
+		self.sentences = self.makeSentences(text)
+		self.readSentences = [False] * len(self.sentences)
 
 	def __eq__(self, other):
 		return self.text == other.text \
@@ -27,10 +23,6 @@ class jBlock(object):
 		result += ', '.join(self.lemmaList)
 		result += u'\n'
 		return result.encode('utf-8')
-
-	@staticmethod
-	def makeTokens(text):
-		return jTokenize(text)
 
 #	def setReadTokens(self, indexIn, indexOut):
 #		'''Takes an index in and index out on the Block's text
