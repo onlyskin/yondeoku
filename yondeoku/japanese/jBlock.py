@@ -1,45 +1,51 @@
 #! /usr/bin/env python                                                        
 # -*- coding: utf-8 -*-
 
+import re
+from yondeoku.japanese.Sentence import Sentence
+
 class jBlock(object):
 
 	def __init__(self, text):
-		self.text = text
+		self.jText = text
 		self.sentences = self.makeSentences(text)
 		self.readSentences = [False] * len(self.sentences)
 
 	def __eq__(self, other):
-		return self.text == other.text \
-			and self.tokens == other.tokens \
-			and self.lemmaList == other.lemmaList \
-			and self.readTokens == other.readTokens
+		return self.jText == other.jText \
+			and self.sentences == other.sentences \
+			and self.readSentences == other.readSentences
 
 	def __repr__(self):
 		result = u'Block:\ntext: '
-		result += self.text
-		result += u'\ntokens: '
-		result += ', '.join(self.tokens)
-		result += u'\nlemmaList:'
-		result += ', '.join(self.lemmaList)
-		result += u'\n'
+		result += self.jText
+		result += u'\nsentences: '
+		result += ', '.join(self.sentences)
 		return result.encode('utf-8')
 
-#	def setReadTokens(self, indexIn, indexOut):
-#		'''Takes an index in and index out on the Block's text
-#		property. Sets to True in the 'read' array any tokens
-#		whose tokenStrippedText is entirely encompassed in the
-#		original text by this index span. Does not include any
-#		punctuation in this calculation. The indices work as
-#		for slicing - in is inclusive, out is exclusive.
-#
-#		NB - there could be an issue at some point that any
-#		tokens containing entirely punctuation that gets stripped
-#		will only get set as 'read' by this function when indexOut
-#		reaches the index of the end of the previous token's
-#		UNSTRIPPED text'''
-#		for i, token in enumerate(self.tokens):
-#			tokenTextStart = token.strippedStartIndex
-#			tokenTextEnd = tokenTextStart + len(token.strippedText)
-#			if tokenTextStart >= indexIn and tokenTextEnd <= indexOut:
-#				self.readTokens[i] = True
-#		return self
+	@staticmethod
+	def makeSentences(text):
+		sentences = []
+		pattern = re.compile(ur'(。」|！」|？」|。|！|？)')
+		separators = re.finditer(pattern, text)
+		separatorsList = []
+		for i in separators:
+			separatorsList.append(i)
+		for i, m in enumerate(separatorsList):
+			print i, m, m.start(), m.end()
+			#if it's the first separator, the start index is 0
+			if i == 0:
+				start = 0
+			#otherwise the start index is the end of the last separator
+			else:
+				start = separatorsList[i-1].end()
+			length = m.end() - start
+			subtext = text[start:m.end()]
+			section = Sentence(start, length, subtext)
+			sentences.append(section)
+		return sentences
+
+	def setReadSentences(self, sentenceText):
+		for i, sentence in enumerate(self.sentences):
+			if sentenceText == sentence.text:
+				self.readSentences[i] = True

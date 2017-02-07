@@ -11,6 +11,15 @@ class Sentence(object):
 		self.text = text
 		self.tokens = self.makeTokens(text)
 
+	def __repr__(self):
+		result = u'Sentence:\ntext: '
+		result += self.text
+		result += u'\ntokens: '
+		result += ', '.join(self.tokens)
+		return result
+
+	#str -> [str]
 	@staticmethod
 	def makeTokens(text):
+		text = text.replace('\n', '')
 		return jTokenize(text)
