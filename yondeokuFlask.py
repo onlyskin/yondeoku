@@ -14,7 +14,7 @@ from yondeoku.polish.Block import Block
 from yondeoku.polish.Lemmatizer import Lemmatizer
 from yondeoku.polish.settings import DATA_PATH, LEKTOREK_CACHE_PATH
 from yondeoku.polish.getLektorekDef import getLektorekDef
-from yondeoku.polish.UserEncoder import UserEncoder
+from yondeoku.UserEncoder import UserEncoder
 
 DEBUG = True
 PORT = 4000
