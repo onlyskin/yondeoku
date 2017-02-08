@@ -2,7 +2,8 @@
 	<div id="studyContainer">
 		<a href="#/main/select">Back to user page...</a>
 		<div ng-show="currentBlock === null">Please choose a text to study from your user page...</div>
-		<table ng-hide="currentBlock === null || readingPhase" id="vocabItems">
+		<jstudy ng-controller="japaneseCtrl" ng-hide="currentBlock === null || readingPhase || currentBlock.type === 'Block'"></jstudy>
+		<table ng-hide="currentBlock === null || readingPhase || currentBlock.type === 'jBlock'" id="vocabItems">
 			<thead>
 				<tr>
 					<th ng-show="guessingPhase"></th>

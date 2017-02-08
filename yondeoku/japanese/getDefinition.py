@@ -74,11 +74,11 @@ def getClosestEntries(word, candidateEntries):
 	return closestEntries
 
 #str => [{japanese: '', glosses: []}]
-#returns all itesm from the edict which had the closest length to the
+#returns all items from the edict which had the closest length to the
 #original search term. I recommend checking to see if any add only extra
 #kana when the final definition is presented to the user, as this should
 #be the best match
-def getDef(token):
+def getDefinition(token):
 	EdictEntries = searchEdict(token)
 	filteredEdictEntries = getClosestEntries(token, EdictEntries)
 	result = []

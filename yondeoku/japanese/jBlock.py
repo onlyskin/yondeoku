@@ -43,6 +43,12 @@ class jBlock(object):
 			subtext = text[start:m.end()]
 			section = Sentence(start, length, subtext)
 			sentences.append(section)
+		#if the final separator ends before the end of the text
+		lastSeparatorIndex = separatorsList[-1].end()
+		if lastSeparatorIndex < len(text):
+			finalSubText = text[lastSeparatorIndex:]
+			finalSection = Sentence(lastSeparatorIndex, len(finalSubText), finalSubText)
+			sentences.append(finalSection)
 		return sentences
 
 	def setReadSentences(self, sentenceText):

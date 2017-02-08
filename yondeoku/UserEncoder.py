@@ -2,6 +2,8 @@ import json
 from yondeoku.polish.Token import Token
 from yondeoku.polish.Block import Block
 from yondeoku.polish.User import User
+from yondeoku.japanese.jBlock import jBlock
+from yondeoku.japanese.Sentence import Sentence
 
 class UserEncoder(json.JSONEncoder):
     def default(self, obj):
@@ -13,6 +15,7 @@ class UserEncoder(json.JSONEncoder):
                 "strippedStartIndex": obj.strippedStartIndex}
         if isinstance(obj, Block):
             return {
+                "type": "Block",
                 "text": obj.text,
                 "tokens": obj.tokens,
                 "lemmaList": obj.lemmaList,
@@ -29,7 +32,8 @@ class UserEncoder(json.JSONEncoder):
             }
         if isinstance(obj, jBlock):
             return {
-                "text": obj.text,
+                "type": "jBlock",
+                "jText": obj.jText,
                 "sentences": obj.sentences,
                 "readSentences": obj.readSentences
             }
@@ -39,11 +43,6 @@ class UserEncoder(json.JSONEncoder):
                 "length": obj.length,
                 "text": obj.text,
                 "tokens": obj.tokens
-            }
-        if isinstance(obj, EdictEntry):
-            return {
-                "japanese": obj.japanese,
-                "glosses": obj.glosses
             }
         if isinstance(obj, set):
             return list(obj)

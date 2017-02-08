@@ -226,6 +226,32 @@ study {
 	}
 }
 
+jstudy {
+
+	.definitionsWrapper {
+		display: flex;
+		flex-direction: column;
+
+		.definitionContainer {
+			display: flex;
+			border-bottom: 1px solid #ddd;
+
+			&:last-of-type {
+				border-bottom: none;
+			}
+
+			.japanese {
+				width: 40px;
+			}
+			.glossWrapper {
+				display: flex;
+				flex-direction: column;
+				.gloss {}
+			}
+		}
+	}
+}
+
 dev-stats {
 	border: 2px solid Maroon;
 	padding: 10px;

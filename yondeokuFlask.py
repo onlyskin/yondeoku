@@ -15,14 +15,15 @@ from yondeoku.polish.Lemmatizer import Lemmatizer
 from yondeoku.polish.settings import DATA_PATH, LEKTOREK_CACHE_PATH
 from yondeoku.polish.getLektorekDef import getLektorekDef
 from yondeoku.UserEncoder import UserEncoder
+from yondeoku.japanese.getDefinition import getDefinition
 
 DEBUG = True
-PORT = 4000
+PORT = 3000
 HOST = '0.0.0.0'
 
 testLemmatizer = Lemmatizer(u'mock/testDict.json')
 
-polishLemmatizer = Lemmatizer(u'lemmaDict.json')
+#polishLemmatizer = Lemmatizer(u'lemmaDict.json')
 
 #  .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-
 # / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \
@@ -146,7 +147,7 @@ def getDef():
 	the function returns a list of definitions'''
 	word = request.get_json()['word']
 	definition = getLektorekDef(word, LEKTOREK_CACHE_PATH)
-	return json.dumps(definition)
+	return json.dumps(definition, sort_keys=True, indent=4, separators=(',', ': '))
 
 @app.route('/getDefs', methods=['POST'])
 def getDefs():
@@ -157,7 +158,31 @@ def getDefs():
 	for word in words:
 		definition = getLektorekDef(word, LEKTOREK_CACHE_PATH)
 		definitions.append(definition)
-	return json.dumps(definitions)
+	return json.dumps(definitions, sort_keys=True, indent=4, separators=(',', ': '))
+
+@app.route('/getJapaneseDef', methods=['POST'])
+def getJapaneseDef():
+	'''the POST body must contain a json dict with {'word': lemma}
+	the function returns a list of objects. Each object in the list
+	has 'japanese' and 'glosses' properties'''
+	word = request.get_json()['word']
+	print word
+	definitionList = getDefinition(word)
+	return json.dumps(definitionList, sort_keys=True, indent=4, separators=(',', ': '))
+
+@app.route('/getJapaneseDefs', methods=['POST'])
+def getJapaneseDefs():
+	'''the POST body must contain a json dict with {'words': [word, ...]}
+	the function returns a list of lists of objects. Each list of objects
+	is a list of objects with 'japanese' and 'glosses' properties'''
+	words = request.get_json()['words']
+	definitions = []
+	for word in words:
+		print word
+		definitionObjectList = getDefinition(word)
+		definitions.append(definitionObjectList)
+	return json.dumps(definitions, sort_keys=True, indent=4, separators=(',', ': '))
+
 
 #  .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-
 # / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \

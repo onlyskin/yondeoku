@@ -11,6 +11,16 @@ angular.module('yondeokuApp')
 			.then(function (response) {
 				callback(response);
 			});
+		},
+
+		//gets a single definition object from a single word
+		//the response contains [{japanese: '', glosses: []}, ...]
+		getJapaneseDefinition: function(definition, callback) {
+			let lemma = definition.lemma;
+			$http.post('getJapaneseDef', {word: lemma}, {headers: {'Content-Type': 'application/json'} })
+			.then(function (r) {
+				callback(r);
+			});
 		}
 
 	};

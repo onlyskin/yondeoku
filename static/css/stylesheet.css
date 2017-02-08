@@ -131,6 +131,20 @@ study table td {
 study button {
   align-self: flex-end; }
 
+jstudy .definitionsWrapper {
+  display: flex;
+  flex-direction: column; }
+  jstudy .definitionsWrapper .definitionContainer {
+    display: flex;
+    border-bottom: 1px solid #ddd; }
+    jstudy .definitionsWrapper .definitionContainer:last-of-type {
+      border-bottom: none; }
+    jstudy .definitionsWrapper .definitionContainer .japanese {
+      width: 40px; }
+    jstudy .definitionsWrapper .definitionContainer .glossWrapper {
+      display: flex;
+      flex-direction: column; }
+
 dev-stats {
   border: 2px solid Maroon;
   padding: 10px;

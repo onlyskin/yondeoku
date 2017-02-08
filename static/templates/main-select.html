@@ -13,8 +13,8 @@
 		<a id="addBlock" href="/#/main/add">Add a new text.</a>
 		<div ng-init="expanded=false" ng-repeat="Block in userdata.Blocks" class="blocks">
 			<p class="percent">[[ getReadPercentage(Block) ]]% read<br>[[ getReadRatio(Block) ]]<p>
-			<div ng-click="expanded=!expanded" class="headerText">[[ getBlockIndex(Block) + 1 ]]) [[ Block.text.slice(0, 50) ]]...</div>
-			<div ng-show="expanded" class="blockText">[[ Block.text ]]</div>
+			<div ng-click="expanded=!expanded" class="headerText">[[ getBlockIndex(Block) + 1 ]]) [[ Block.text.slice(0, 50) || Block.jText.slice(0, 50) ]]...</div>
+			<div ng-show="expanded" class="blockText">[[ Block.text || Block.jText ]]</div>
 <!--			<div ng-show="expanded" class="blockText">
 				<span ng-init="read=Block.readTokens[$index]" ng-class="{'read': read}" ng-repeat="Token in Block.tokens track by $index">[[ Token.tokenText ]] </span>
 			</div>
