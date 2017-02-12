@@ -33,6 +33,13 @@ angular.module('yondeokuApp')
 				}
 			};
 			return {indexIn: startIndex, indexOut: nextBreakpoint(startIndex)};
+		},
+		getNextUnreadIndex: function(jBlock, start) {
+			if (jBlock.type !== 'jBlock') {
+				return [];
+			}
+			let nextUnreadIndex = jBlock.readSentences.indexOf(false, start);
+			return nextUnreadIndex;
 		}
 	};
 

@@ -2,7 +2,7 @@
 	<div id="studyContainer">
 		<a href="#/main/select">Back to user page...</a>
 		<div ng-show="currentBlock === null">Please choose a text to study from your user page...</div>
-		<jstudy ng-controller="japaneseCtrl" ng-hide="currentBlock === null || readingPhase || currentBlock.type === 'Block'"></jstudy>
+		<jstudy ng-controller="japaneseCtrl"></jstudy>
 		<table ng-hide="currentBlock === null || readingPhase || currentBlock.type === 'jBlock'" id="vocabItems">
 			<thead>
 				<tr>
@@ -17,7 +17,7 @@
 			</thead>
 			<tbody>
 				<tr class="lemma" ng-repeat="obj in newWords track by $index + obj.lemma" ng-init="studied=false">
-					<td ng-show="guessingPhase" class="add no-top" ng-click="addKnownLemma(obj.lemma)">◎</td>
+					<td ng-show="guessingPhase" class="add no-top" ng-click="addKnownLemma(false, obj.lemma)">◎</td>
 					<td class="no-top">[[ $index + 1 ]]</td>
 					<td class="lemma">[[ obj.lemma ]]</td>
 					<td class="guess"><input ng-model="guess" type="text"></td>
@@ -37,7 +37,6 @@
 			</tbody>
 		</table>
 		<div id="reading" ng-show="readingPhase"><span>...[[ previousSection ]]</span> [[ currentlyReadingSection ]] <span>[[ nextSection ]]...</span></div>
-		<!--FIGURE OUT HOW TO GET DONEREADING CALLBACK WORKING-->
 		<button ng-show="readingPhase" ng-click="doneReading()">Read. Read next section.</button>
 	</div>
 </study>

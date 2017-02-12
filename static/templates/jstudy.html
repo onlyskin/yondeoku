@@ -11,7 +11,7 @@
 	</thead>
 	<tbody>
 		<tr class="lemma" ng-repeat="obj in newJapaneseWords track by $index + obj.lemma" ng-init="studied=false">
-			<td ng-show="guessingPhase" class="add no-top" ng-click="addKnownLemma(obj.lemma)">◎</td>
+			<td ng-show="guessingPhase" class="add no-top" ng-click="addKnownLemma(true, obj.lemma)">◎</td>
 			<td class="no-top">[[ $index + 1 ]]</td>
 			<td class="lemma">[[ obj.lemma ]]</td>
 			<td class="guess"><input ng-model="guess" type="text"></td>

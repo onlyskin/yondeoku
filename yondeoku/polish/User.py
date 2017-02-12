@@ -12,6 +12,7 @@ class User(object):
 		self.Blocks = []
 		self.pickleFilePath = DATA_PATH + self.username + u'.pickle'
 		self.known = set()
+		self.jKnown = set()
 		self.threshold = 8
 
 	def __repr__(self):

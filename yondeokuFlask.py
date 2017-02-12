@@ -81,23 +81,35 @@ def deleteBlock(username):
 #.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.
 @app.route('/setKnownWords/<username>', methods=['POST'])
 def setKnownWords(username):
-	'''POST body: [word, word, word]
+	'''POST body: {japanese: boolean, words: [word, ...]}
 	mimetype application/json'''
 	currentUser = User.loadUserDataFromPickle(username)
-	words = request.get_json()
-	for word in words:
-		currentUser.known.add(word)
+	data = request.get_json()
+	japanese = data['japanese']
+	words = data['words']
+	if japanese:
+		for word in words:
+			currentUser.jKnown.add(word)
+	else:
+		for word in words:
+			currentUser.known.add(word)
 	currentUser.saveUserDataToPickle()
 	return json.dumps(currentUser, cls=UserEncoder, sort_keys=True, indent=4, separators=(',', ': '))
 
 @app.route('/removeKnownWords/<username>', methods=['POST'])
 def removeKnownWords(username):
-	'''POST body: [word, word, word]
+	'''POST body: {japanese: boolean, words: [word, ...]}
 	mimetype application/json'''
 	currentUser = User.loadUserDataFromPickle(username)
-	words = request.get_json()
-	for word in words:
-		currentUser.known.remove(word)
+	data = request.get_json()
+	japanese = data['japanese']
+	words = data['words']
+	if japanese:
+		for word in words:
+				currentUser.jKnown.remove(word)
+	else:
+		for word in words:
+			currentUser.known.remove(word)
 	currentUser.saveUserDataToPickle()
 	return json.dumps(currentUser, cls=UserEncoder, sort_keys=True, indent=4, separators=(',', ': '))
 
@@ -127,12 +139,22 @@ def setReadTokens(username):
 	blockText = JSON['blockText']
 	readIn = JSON['readIn']
 	readOut = JSON['readOut']
+	print readIn, readOut
 	readValue = JSON['readValue']
 	currentUser = User.loadUserDataFromPickle(username)
-	activeBlock = next(Block for Block in currentUser.Blocks if Block.text == blockText)
-	for i, value in enumerate(activeBlock.readTokens):
-		if i >= readIn and i < readOut:
-			activeBlock.readTokens[i] = readValue
+	if JSON['japanese']:
+		filteredBlocks = filter(lambda x: 'jText' in vars(x).keys(), currentUser.Blocks)
+		activeBlock = next(Block for Block in filteredBlocks if Block.jText == blockText)
+		for i, value in enumerate(activeBlock.readSentences):
+			if i >= readIn and i < readOut:
+				activeBlock.readSentences[i] = readValue
+	else:
+		filteredBlocks = filter(lambda x: 'text' in vars(x).keys(), currentUser.Blocks)
+		activeBlock = next(Block for Block in filteredBlocks if Block.text == blockText)
+		for i, value in enumerate(activeBlock.readTokens):
+			if i >= readIn and i < readOut:
+				activeBlock.readTokens[i] = readValue
+	print currentUser.Blocks[3].readSentences
 	currentUser.saveUserDataToPickle()
 	return json.dumps(currentUser, cls=UserEncoder, sort_keys=True, indent=4, separators=(',', ': '))
 

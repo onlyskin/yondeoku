@@ -1,3 +1,13 @@
+Short Term:
+- make japanese render correct sentence and mark them as read correctly
+- separate out study.js into a separate polish study controller (do a directive for the polish table too)
+
+Refactoring:
+- refactor a lot of the angular stuff out to work better - esp. lots of watches, and relinking that needs to happen, maybe we can just group all the things we watch in scope variables and all the relinking functions
+- stop using pickle, start using database
+- change Polish code to do whole sentences
+- create known lists for filtering grammatical words before they even get sent to the server
+
 Bugs from use:
 - form needs to clear last guesses
 - the ability to click to link to another dictionary would be good

@@ -5,7 +5,7 @@ angular.module('yondeokuApp')
 
 	let readDict = LemmaService.getReadLemmas(DataService.userdata);
 
-	$scope.currentBlock = null;
+	$scope.currentBlock = {};
 	$scope.userdata = DataService.userdata;
 
 	DataService.getUserdata();
@@ -55,11 +55,18 @@ angular.module('yondeokuApp')
 		$scope.readingPhase = true;
 		$scope.currentlyReadingSection = renderCurrentlyReadingSection();
 		let firstRepeat = $$childHead;
-		console.log($$childHead);
 	};
 
 	$scope.doneReading = () => {
-		ServerService.setRead($scope.currentBlock.text, $scope.currentlyReading.in, $scope.currentlyReading.out + 1);
+		if ($scope.currentBlock.text === undefined) {
+			console.log('$scope.doneReading submits', $scope.currentlyReading.in, $scope.currentlyReading.out);
+			ServerService.setRead($scope.currentBlock.jText, $scope.currentlyReading.in, $scope.currentlyReading.out + 1, true);
+		} else {
+			ServerService.setRead($scope.currentBlock.text, $scope.currentlyReading.in, $scope.currentlyReading.out + 1, false);
+		}
+		$scope.guessingPhase = true;
+		$scope.definitionsPhase = false;
+		$scope.readingPhase = false;
 	}
 
 	function renderDefinitions (responseJSON) {
@@ -86,7 +93,7 @@ angular.module('yondeokuApp')
 	$scope.nextSection = '';
 
 	function setPreviousSection () {
-		if ($scope.currentBlock === null) {
+		if (JSON.stringify($scope.currentBlock) === "{}") {
 			return '';
 		}
 		let section = $scope.currentBlock.tokens.slice($scope.currentlyReading.in - 100, $scope.currentlyReading.in).map((token) => {
@@ -96,7 +103,7 @@ angular.module('yondeokuApp')
 	};
 
 	function setNextSection () {
-		if ($scope.currentBlock === null) {
+		if (JSON.stringify($scope.currentBlock) === "{}") {
 			return '';
 		}
 		let section = $scope.currentBlock.tokens.slice($scope.currentlyReading.out + 1, $scope.currentlyReading.out + 51).map((token) => {
@@ -106,7 +113,7 @@ angular.module('yondeokuApp')
 	};
 
 	function renderCurrentlyReadingSection () {
-		if ($scope.currentBlock === null) {
+		if (JSON.stringify($scope.currentBlock) === "{}") {
 			return '';
 		}
 		let section = $scope.currentBlock.tokens.slice($scope.currentlyReading.in, $scope.currentlyReading.out + 1).map((token) => {
@@ -116,6 +123,7 @@ angular.module('yondeokuApp')
 	};
 
 	$scope.$watchCollection('currentBlock', () => {
+		console.log('currentBlock watch triggered');
 		$scope.guessingPhase = true;
 		$scope.definitionsPhase = false;
 		$scope.readingPhase = false;
@@ -123,13 +131,14 @@ angular.module('yondeokuApp')
 	});
 
 	$scope.$watchCollection('userdata', () => {
+		console.log('userdata watch triggered');
 		readDict = LemmaService.getReadLemmas(DataService.userdata);
 		relinkCurrentBlock();
 		recalculateReadingSection();
 	});
 
-	$scope.addKnownLemma = function(lemma) {
-		ServerService.addKnownLemma(lemma);
+	$scope.addKnownLemma = function(japanese, lemma) {
+		ServerService.addKnownLemma(japanese, lemma);
 	};
 
 	function isNew (lemma) {
@@ -147,7 +156,7 @@ angular.module('yondeokuApp')
 	};
 
 	function getNewWordsAndSetReadingSection() {
-		if ($scope.currentBlock === null) {
+		if (JSON.stringify($scope.currentBlock) === "{}") {
 			return [];
 		}
 		let readingPosition = $scope.currentBlock.readTokens.indexOf(false);

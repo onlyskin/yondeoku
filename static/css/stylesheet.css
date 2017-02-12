@@ -46,10 +46,12 @@ user-overview {
     border: 1px solid black;
     padding: 10px;
     margin: 2px; }
-    user-overview #userMeta #knownWords {
+    user-overview #userMeta #knownWords, user-overview #userMeta #jKnownWords {
       font-size: 12px;
       width: 100%;
       column-count: 4; }
+    user-overview #userMeta #knownWords {
+      padding-top: 20px; }
     user-overview #userMeta .block {
       display: flex; }
   user-overview #blockInfo {
@@ -140,7 +142,7 @@ jstudy .definitionsWrapper {
     jstudy .definitionsWrapper .definitionContainer:last-of-type {
       border-bottom: none; }
     jstudy .definitionsWrapper .definitionContainer .japanese {
-      width: 40px; }
+      width: 80px; }
     jstudy .definitionsWrapper .definitionContainer .glossWrapper {
       display: flex;
       flex-direction: column; }

@@ -5,14 +5,14 @@ angular.module('yondeokuApp')
 
 	var ServerService = {
 
-		addKnownLemma: function (lemma) {
-			$http.post('setKnownWords/flaskTestUser', [lemma], {headers: {'Content-Type': 'application/json'} })
+		addKnownLemma: function (japanese, lemma) {
+			$http.post('setKnownWords/flaskTestUser', {'japanese': japanese, 'words': [lemma]}, {headers: {'Content-Type': 'application/json'} })
 			.then(function (response) {
 				Object.assign(DataService.userdata, response.data);
 			});
 		},
-		deleteKnownLemma: function (lemma) {
-			$http.post('removeKnownWords/flaskTestUser', [lemma], {headers: {'Content-Type': 'application/json'} })
+		deleteKnownLemma: function (japanese, lemma) {
+			$http.post('removeKnownWords/flaskTestUser', {'japanese': japanese, 'words': [lemma]}, {headers: {'Content-Type': 'application/json'} })
 			.then(function (response) {
 				Object.assign(DataService.userdata, response.data);
 			});
@@ -37,11 +37,13 @@ angular.module('yondeokuApp')
 				Object.assign(DataService.userdata, response.data);
 			});
 		},
-		setRead: function (blockText, readIn, readOut) {
+		setRead: function (blockText, readIn, readOut, japanese) {
+			console.log(readIn, readOut)
 			var body = {'blockText': blockText,
 						'readIn': readIn,
 						'readOut': readOut,
-						'readValue': true};
+						'readValue': true,
+						'japanese': japanese};
 			$http.post('setReadTokens/flaskTestUser', body, {headers: {'Content-Type': 'application/json'} })
 			.then(function (response) {
 				Object.assign(DataService.userdata, response.data);

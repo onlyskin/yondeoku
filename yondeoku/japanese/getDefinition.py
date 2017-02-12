@@ -22,10 +22,6 @@ class fakeEdictEntry(object):
         # Currently unhandled stuff goes here...
         self.unparsed = unparsed
 
-class fakeResult:
-	def __init__(self):
-		self.glosses = ''
-
 #str -> [edictEntry object]
 #edictEntry - {glosses[], unparsed[], furigana'', japanese'', tags[set]}
 def searchEdict(query):
@@ -56,8 +52,7 @@ def getClosestEntries(word, candidateEntries):
 	candidateEntries = filter(lambda x: word in x.japanese, candidateEntries)
 	#if there are no results left (or none to start with), just return a faked object
 	if candidateEntries == []:
-		x = fakeResult()
-		return x
+		return []
 	wordLength = len(word)
 	candidateWords = map(lambda x: x.japanese, candidateEntries)
 	#prints the word and the current candidates to the console
@@ -79,14 +74,23 @@ def getClosestEntries(word, candidateEntries):
 #kana when the final definition is presented to the user, as this should
 #be the best match
 def getDefinition(token):
-	EdictEntries = searchEdict(token)
-	filteredEdictEntries = getClosestEntries(token, EdictEntries)
 	result = []
-	for entry in filteredEdictEntries:
-		japanese = entry.japanese
-		glosses = entry.glosses[:3]
-		output = {'japanese': japanese, 'glosses': glosses}
-		result.append(output)
+	shortened = 0
+	max = 2
+	while not result:
+		if shortened > 0:
+			token = token[:-shortened]
+		EdictEntries = searchEdict(token)
+		filteredEdictEntries = getClosestEntries(token, EdictEntries)
+		for entry in filteredEdictEntries:
+			japanese = entry.japanese
+			glosses = entry.glosses[:3]
+			output = {'japanese': japanese, 'glosses': glosses}
+			result.append(output)
+		if shortened <= max:
+			shortened = shortened + 1
+		else:
+			break
 	return result
 
 def developerInspection(word, candidateWords):

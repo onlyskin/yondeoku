@@ -1,7 +1,10 @@
 <user-overview>
 	<div id="userMeta">
 		<h3>Username: [[ userdata.username ]]</h3>
-		<p title="These are the words that you have marked as definitely known while reading texts.">Known words: ([[ userdata.known.length ]])
+		<p title="These are the words that you have marked as definitely known while reading texts.">Known words:<br>Polish: [[ userdata.known.length ]]<br>Japanese: [[ userdata.jKnown.length ]]
+			<div id="jKnownWords">
+				<div ng-repeat="word in userdata.jKnown.sort()">[[ word ]]</div>
+			</div>
 			<div id="knownWords">
 				<div ng-repeat="word in userdata.known.sort()">[[ word ]]</div>
 			</div>
@@ -16,9 +19,9 @@
 			<div ng-click="expanded=!expanded" class="headerText">[[ getBlockIndex(Block) + 1 ]]) [[ Block.text.slice(0, 50) || Block.jText.slice(0, 50) ]]...</div>
 			<div ng-show="expanded" class="blockText">[[ Block.text || Block.jText ]]</div>
 <!--			<div ng-show="expanded" class="blockText">
-				<span ng-init="read=Block.readTokens[$index]" ng-class="{'read': read}" ng-repeat="Token in Block.tokens track by $index">[[ Token.tokenText ]] </span>
-			</div>
--->			<a ng-click="setCurrentBlock(Block)" href="/#/main/study">Read This Text</a>
+				<span ng-init="read=Block.readSentences[$index]" ng-class="{'read': read}" ng-repeat="sentence in Block.sentences track by $index">[[ sentence.text ]] </span>
+			</div>-->
+			<a ng-click="setCurrentBlock(Block)" href="/#/main/study">Read This Text</a>
 			<a ng-click="safeDeleteBlock(Block.text)" href="/#/main/select">Delete This Text</a>
 		</div>
 	</div>

@@ -76,10 +76,14 @@ user-overview {
 		padding: 10px;
 		margin: 2px;
 
-		#knownWords {
+		#knownWords, #jKnownWords {
 			font-size: 12px;
 			width: 100%;
 			column-count: 4;
+		}
+
+		#knownWords {
+			padding-top: 20px;
 		}
 
 		.block {
@@ -241,7 +245,7 @@ jstudy {
 			}
 
 			.japanese {
-				width: 40px;
+				width: 80px;
 			}
 			.glossWrapper {
 				display: flex;

@@ -28,6 +28,7 @@ class UserEncoder(json.JSONEncoder):
                 "Blocks": obj.Blocks,
                 "pickleFilePath": obj.pickleFilePath,
                 "known": obj.known,
+                "jKnown": obj.jKnown,
                 "threshold": obj.threshold
             }
         if isinstance(obj, jBlock):
