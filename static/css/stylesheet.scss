@@ -244,8 +244,13 @@ jstudy {
 				border-bottom: none;
 			}
 
-			.japanese {
+			.japaneseWrapper {
+				display: flex;
+				flex-direction: column;
 				width: 80px;
+				.furigana {
+					font-size: 12px;
+				}
 			}
 			.glossWrapper {
 				display: flex;

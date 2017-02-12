@@ -141,8 +141,12 @@ jstudy .definitionsWrapper {
     border-bottom: 1px solid #ddd; }
     jstudy .definitionsWrapper .definitionContainer:last-of-type {
       border-bottom: none; }
-    jstudy .definitionsWrapper .definitionContainer .japanese {
+    jstudy .definitionsWrapper .definitionContainer .japaneseWrapper {
+      display: flex;
+      flex-direction: column;
       width: 80px; }
+      jstudy .definitionsWrapper .definitionContainer .japaneseWrapper .furigana {
+        font-size: 12px; }
     jstudy .definitionsWrapper .definitionContainer .glossWrapper {
       display: flex;
       flex-direction: column; }

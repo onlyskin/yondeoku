@@ -85,7 +85,8 @@ def getDefinition(token):
 		for entry in filteredEdictEntries:
 			japanese = entry.japanese
 			glosses = entry.glosses[:3]
-			output = {'japanese': japanese, 'glosses': glosses}
+			furigana = entry.furigana
+			output = {'japanese': japanese, 'glosses': glosses, 'furigana': furigana}
 			result.append(output)
 		if shortened <= max:
 			shortened = shortened + 1

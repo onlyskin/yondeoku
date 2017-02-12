@@ -18,7 +18,10 @@
 			<td class="definition" ng-show="definitionsPhase">
 				<div class="definitionsWrapper">
 					<div class="definitionContainer" ng-repeat="definition in obj.definitions">
-						<div class="japanese">[[ definition.japanese ]]</div>
+						<div class="japaneseWrapper">
+							<div class="japanese">[[ definition.japanese ]]</div>
+							<div class="furigana">[[ definition.furigana ]]</div>
+						</div>
 						<div class="glossWrapper">
 							<div class="gloss" ng-repeat="gloss in definition.glosses">[[ gloss ]]</div>
 						</div>
