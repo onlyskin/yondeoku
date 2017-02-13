@@ -8,6 +8,7 @@ import time
 from pprint import pprint
 
 from yondeoku.polish.settings import LEKTOREK_CACHE_PATH
+from yondeoku.Definition import Definition
 
 #word -> boolean
 def checkLektorekCache(word, LEKTOREK_CACHE_PATH):
@@ -78,3 +79,39 @@ def getLektorekDef(word, LEKTOREK_CACHE_PATH):
 		JSON = getLektorekJSONFromCache(word, LEKTOREK_CACHE_PATH)
 		result = getCorrectDef(JSON)
 		return result
+
+def getCorrectDefAsDefinitions(JSON):
+	'''Variant of getCorrectDef, which returns actual Definition
+	objects, preserving the found_as property from the JSON.'''
+	if JSON == {}:
+		return []
+	results = JSON[u'results']
+	definitions = []
+	for result in results:
+		if result[u'polish_word'] == JSON[u'found_as']:
+			meaning = result[u'embedded_definition']
+			found_as = JSON[u'found_as']
+			obj = Definition(meaning, None, found_as)
+			definitions.append(obj)
+	return definitions
+
+
+def getLektorekDefAsDefinitions(word, LEKTOREK_CACHE_PATH):
+	'''Variant of getLektorekDef, which returns actual Definition
+	objects, preserving the found_as property form the JSON.'''
+	if not checkLektorekCache(word, LEKTOREK_CACHE_PATH):
+		JSON = getJSONfromURL(word)
+		cacheLektorekResult(word, JSON, LEKTOREK_CACHE_PATH)
+		result = getCorrectDefAsDefinitions(JSON)
+		return result
+	else:
+		JSON = getLektorekJSONFromCache(word, LEKTOREK_CACHE_PATH)
+		result = getCorrectDefAsDefinitions(JSON)
+		return result
+
+def getDefObjList(word):
+	'''Returns a list of Definition objects. To be used by the
+	plDefiner class.'''
+	definitionList = getLektorekDefAsDefinitions(word, LEKTOREK_CACHE_PATH)
+	return definitionList
+

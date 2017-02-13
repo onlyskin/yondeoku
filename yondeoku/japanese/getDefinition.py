@@ -5,6 +5,7 @@ import re
 from pprint import pprint
 import itertools
 from yondeoku.japanese.monash_edict_search import *
+from yondeoku.Definition import Definition
 
 edict_path = 'yondeoku/japanese/edict2'
 
@@ -92,6 +93,17 @@ def getDefinition(token):
 			shortened = shortened + 1
 		else:
 			break
+	return result
+
+def getDefObjList(token):
+	'''Returns a list of Definition objects. To be used by the
+	jaDefiner class. This is partly a wrapper on getDefinition
+	for temporary backwards compatibility.'''
+	def objToDefinition(obj):
+		return Definition(obj.glosses, obj.furigana, obj.japanese)
+
+	definitionList = getDefinition(token)
+	result = map(objToDefinition, definitionList)
 	return result
 
 def developerInspection(word, candidateWords):
