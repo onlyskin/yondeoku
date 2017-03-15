@@ -47,4 +47,6 @@ class UserEncoder(json.JSONEncoder):
             }
         if isinstance(obj, set):
             return list(obj)
+        if isinstance(obj, tuple):
+            return list(obj)
         return super(UserEncoder, self).default(obj)

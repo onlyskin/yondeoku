@@ -23,7 +23,7 @@ HOST = '0.0.0.0'
 
 testLemmatizer = Lemmatizer(u'mock/testDict.json')
 
-#polishLemmatizer = Lemmatizer(u'lemmaDict.json')
+polishLemmatizer = Lemmatizer(u'lemmaDict.json')
 
 #  .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-
 # / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \

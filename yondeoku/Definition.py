@@ -1,4 +1,5 @@
 class Definition(object):
+	'''Language independent definition class.'''
 
 	def __init__(self, meaning, pronunciation, found_as):
 		self.meaning = meaning

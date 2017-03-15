@@ -1,10 +1,10 @@
-class AbstractDefiner(object):
-	'''Abstract Definer class. Subclass for a given language,
+class AbstractSectionizer(object):
+	'''Abstract Sectionizer class. Subclass for a given language,
 	implement init to set self.language to appropriate language
-	string, implement the define method.'''
+	string, implement the sectionize method.'''
 
 	def __init__(self, language):
 		self.language = language
 
-	def define(self):
+	def sectionize(self):
 		raise NotImplementedError("Should have implemented this")

@@ -4,7 +4,7 @@ from yondeoku.polish.Block import Block
 from yondeoku.polish.Lemmatizer import Lemmatizer
 from yondeoku.polish.getLektorekDef import getLektorekDef
 
-class User(object):
+class gUser(object):
 
 	#modify to allow loading from pickle
 	def __init__(self, username):
