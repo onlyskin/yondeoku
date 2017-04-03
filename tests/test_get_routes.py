@@ -1,18 +1,19 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
-
 import pytest
 import json
+import os
 
-from yondeokuApp import app as realApp
+from yondeokuApp import app as realApp, db as _db, User
 from flask import url_for
 
 from yondeoku.japanese.grammarWords import jaGrammarWords
 
-realApp.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/fake.db'
+TESTDB_PATH = 'sqlite:////tmp/fake.db'
+realApp.config['SQLALCHEMY_DATABASE_URI'] = TESTDB_PATH 
 realApp.config['TESTING'] = True
 
-@pytest.fixture
+@pytest.fixture(scope='session')
 def app(request):
     ctx = realApp.app_context()
     ctx.push()
@@ -22,6 +23,27 @@ def app(request):
 
     request.addfinalizer(teardown)
     return realApp
+
+@pytest.fixture(scope='function')
+def db(app, request):
+    """Session-wide test database."""
+
+    if os.path.exists(TESTDB_PATH):
+        os.unlink(TESTDB_PATH)
+    _db.init_app(app)
+
+    _db.create_all()
+
+    fakeUser = User(username='fakeUser', password='password')
+    _db.session.add(fakeUser)
+    _db.session.commit()
+
+    def teardown():
+        _db.drop_all()
+        # os.unlink(TESTDB_PATH)
+
+    request.addfinalizer(teardown)
+    return _db
 
 def test_get_grammatical_words_route_returns_200(client):
 	assert client.get(url_for('getGrammaticalWords', language='pl')).status_code == 200
@@ -35,21 +57,12 @@ def test_index_route_returns_html(app):
 	response = client.get('/').response
 	assert 'html' in list(response)[0]
 
-
-#####THIS FILE CURRENTLY KEEPS GETTING BROKEN WHEN WE
-# RUN THE FULL TEST SUITE - SOMETHING SOMEWHERE IS
-# ERASING THE 'fake.db' DATABASE DURING THE TESTS
-# FIX THIS NEXT, RIGHT NOW WHEN IT HAPPENS WE CAN
-# RUN THE FILE create_fake_db.py WHICH WILL REMAKE IT
-def test_user_data_route(app):
+def test_user_data_route(app, db):
 	client = realApp.test_client()
 	response = client.get(url_for('getUserData', username='fakeUser'))
 	data = response.data
 	data_keys = json.loads(data).keys()
 	data_keys.sort()
 	assert data_keys == ['blocks', 'id', 'known', 'threshold', 'username']
-
-
-
 
 

@@ -1,5 +1,4 @@
 Short Term:
-- make japanese render correct sentence and mark them as read correctly
 - separate out study.js into a separate polish study controller (do a directive for the polish table too)
 
 Refactoring:

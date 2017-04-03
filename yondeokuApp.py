@@ -74,14 +74,16 @@ def getUserData(username):
 	'''This retrieves the user data for user with specific
 	username and returns it as json to the webpage.'''
 	activeUser = User.query.filter_by(username=username).first()
-	return json.dumps(activeUser, cls=ModelEncoder, sort_keys=True, indent=4, separators=(',', ': '))
+	return json.dumps(activeUser, cls=ModelEncoder, sort_keys=True, indent=4,
+            separators=(',', ': '))
 
 @app.route('/getGrammaticalWords/<language>', methods=['GET'])
 def getGrammaticalWords(language):
 	'''This route returns json of the grammatical words
 	defined for the language passed in.'''
 	grammaticalWords = languageAPI[language].grammarWords
-	return json.dumps(grammaticalWords, sort_keys=True, indent=4, separators=(',', ': '))
+	return json.dumps(grammaticalWords, sort_keys=True, indent=4,
+            separators=(',', ': '))
 
 #  .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-
 # / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \

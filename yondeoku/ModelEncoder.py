@@ -8,7 +8,12 @@ class ModelEncoder(json.JSONEncoder):
                 "id": obj.id,
                 "username": obj.username,
                 "threshold": obj.threshold,
-                "known": obj.known
+                "known": obj.known,
+                "blocks": obj.blocks
+            }
+        if isinstance(obj, Block):
+            return {
+                "id": obj.id
             }
         if isinstance(obj, Word):
             return {
