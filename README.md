@@ -1,8 +1,11 @@
 # yondeoku
-Yondeoku is a webapp for advanced language learners. Yondeoku generates custom vocab study lists for arbitrary texts.
+Yondeoku is a webapp for advanced language learners. It generates custom vocab
+study lists for arbitrary texts.
 
-Yondeoku takes into account texts you've already read with Yondeoku along with words you've explicitly marker as known
-to work out which words are new in any given text. The webapp currently support reading texts in Polish and Japanese.
+Yondeoku takes into account texts the you've already read and the words you've
+explicitly marked as known to work out which words are new in any given text.
+The webapp in development currently support reading texts in Polish and Japanese.
 
-Yondeoku is currently still in development phase and is not deployed online. The backend is written in Python using
-Flask web development framework. The frontend is writte in JavaScript using Angular.
+Yondeoku is currently still in its development phase and is not deployed online.
+The backend is written in Python using the Flask web development framework.
+The frontend is writte in JavaScript using Angular.
