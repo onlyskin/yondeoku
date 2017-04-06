@@ -63,7 +63,29 @@ class Word(db.Model):
 # / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \
 #`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'
 
-from yondeoku.ModelEncoder import ModelEncoder
+class ModelEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, User):
+            return {
+                "id": obj.id,
+                "username": obj.username,
+                "threshold": obj.threshold,
+                "known": obj.known,
+                "blocks": obj.blocks
+            }
+        if isinstance(obj, Block):
+            return {
+                "id": obj.id,
+                "language": obj.language,
+                "text": obj.text,
+                "read_ranges": obj.read_ranges
+            }
+        if isinstance(obj, Word):
+            return {
+                "language": obj.language,
+                "word": obj.word
+            }
+        return super(ModelEncoder, self).default(obj)
 
 @app.route('/')
 def index():

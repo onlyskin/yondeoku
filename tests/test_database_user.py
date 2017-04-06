@@ -1,4 +1,4 @@
-#! /usr/bin/env python                                                        
+#! /usr/bin/env python
 # -*- coding: utf-8 -*-
 import pytest
 import os
@@ -8,8 +8,7 @@ from sqlalchemy.exc import IntegrityError
 
 from yondeokuApp import app as realApp
 from yondeokuApp import db as _db
-from yondeokuApp import User, Block, Word
-from yondeoku.ModelEncoder import ModelEncoder
+from yondeokuApp import User, Block, Word, ModelEncoder
 
 TESTDB_PATH = 'sqlite:////tmp/test.db'
 
