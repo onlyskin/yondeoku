@@ -27,17 +27,17 @@ angular.module('yondeokuApp')
 	};
 
 	$scope.getBlockIndex = function(Block) {
-		return $scope.userdata.Blocks.indexOf(Block);
+		return $scope.userdata.blocks.indexOf(Block);
 	};
 
 	function getBlockIndexFromText (blockText) {
-		let blockTextMap = $scope.userdata.Blocks.map((i) => i.text);
+		let blockTextMap = $scope.userdata.blocks.map((i) => i.text);
 		return blockTextMap.indexOf(blockText);
 	}
 
 	function relinkCurrentBlock() {
 		let i = getBlockIndexFromText($scope.currentBlock.text);
-		$scope.currentBlock = $scope.userdata.Blocks[i];
+		$scope.currentBlock = $scope.userdata.blocks[i];
 	};
 
 	$scope.guessingPhase = true;

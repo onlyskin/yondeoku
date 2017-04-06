@@ -6,11 +6,13 @@ angular.module('yondeokuApp')
 	var dataServiceInstance = { userdata: {} };
 
 	dataServiceInstance.getUserdata = function() {
-		$http.get('getUserData/flaskTestUser')
+		$http.get('getUserData/Sam')
 		.then(function(response) {
 			Object.assign(dataServiceInstance.userdata, response.data);
 		});
 	};
+
+	console.log(dataServiceInstance);
 
 	return dataServiceInstance;
 });

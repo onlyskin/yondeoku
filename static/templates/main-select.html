@@ -1,12 +1,12 @@
 <user-overview>
 	<div id="userMeta">
 		<h3>Username: [[ userdata.username ]]</h3>
-		<p title="These are the words that you have marked as definitely known while reading texts.">Known words:<br>Polish: [[ userdata.known.length ]]<br>Japanese: [[ userdata.jKnown.length ]]
-			<div id="jKnownWords">
-				<div ng-repeat="word in userdata.jKnown.sort()">[[ word ]]</div>
+		<p title="These are the words that you have marked as definitely known while reading texts.">Known words:<br>Polish: [[ filterWordsByLanguage(userdata.known, 'pl').length ]]<br>Japanese: [[ filterWordsByLanguage(userdata.known, 'ja').length ]]
+			<div id="knownWords">
+				<div ng-repeat="word in filterWordsByLanguage(userdata.known, 'pl').sort()">[[ word ]]</div>
 			</div>
 			<div id="knownWords">
-				<div ng-repeat="word in userdata.known.sort()">[[ word ]]</div>
+				<div ng-repeat="word in filterWordsByLanguage(userdata.known, 'ja').sort()">[[ word ]]</div>
 			</div>
 		</p>
 		<p title="After this numer of encounters of a given word, it will no longer appear in your vocab lists.">Threshold: [[ userdata.threshold ]]</p>
@@ -14,13 +14,10 @@
 	<div id="blockInfo">
 		<div>The current texts you have are: <span class="note">(click to expand, read sections marked in red)</span></div>
 		<a id="addBlock" href="/#/main/add">Add a new text.</a>
-		<div ng-init="expanded=false" ng-repeat="Block in userdata.Blocks" class="blocks">
+		<div ng-init="expanded=false" ng-repeat="Block in userdata.blocks" class="blocks">
 			<p class="percent">[[ getReadPercentage(Block) ]]% read<br>[[ getReadRatio(Block) ]]<p>
-			<div ng-click="expanded=!expanded" class="headerText">[[ getBlockIndex(Block) + 1 ]]) [[ Block.text.slice(0, 50) || Block.jText.slice(0, 50) ]]...</div>
-			<div ng-show="expanded" class="blockText">[[ Block.text || Block.jText ]]</div>
-<!--			<div ng-show="expanded" class="blockText">
-				<span ng-init="read=Block.readSentences[$index]" ng-class="{'read': read}" ng-repeat="sentence in Block.sentences track by $index">[[ sentence.text ]] </span>
-			</div>-->
+			<div ng-click="expanded=!expanded" class="headerText">[[ getBlockIndex(Block) + 1 ]]) [[ Block.text.slice(0, 50)]]...</div>
+			<div ng-show="expanded" class="blockText">[[ Block.text ]]</div>
 			<a ng-click="setCurrentBlock(Block)" href="/#/main/study">Read This Text</a>
 			<a ng-click="safeDeleteBlock(Block.text)" href="/#/main/select">Delete This Text</a>
 		</div>

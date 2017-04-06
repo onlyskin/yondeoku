@@ -3,6 +3,11 @@
 angular.module('yondeokuApp')
 .controller('selectCtrl', function($scope) {
 
+	//[obj] => [str]
+	$scope.filterWordsByLanguage = function (words, language) {
+		return words.filter((w) => w.language == language).map((w) => w.word);
+	};
+
 	$scope.getReadPercentage = function (Block) {
 		if (Block.type === 'jBlock') {
 			let totalSentences = Block.readSentences.length;
