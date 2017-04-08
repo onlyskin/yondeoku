@@ -11,7 +11,12 @@ def makeSections(text, sentence_breakers, end_quote):
 
 	# returns a regex which will capture any of the sentence breakers, or any of the
 	# sentence breakers plus an end quote
-	regexString = '(' + u'|'.join([c + end_quote for c in sentence_breakers] + [c for c in sentence_breakers]) + ')'
+	regexString = '(' + u'|'.join(
+        	[c + end_quote + '\n+' for c in sentence_breakers] +
+        	[c + '\n+' for c in sentence_breakers] +
+        	[c + end_quote for c in sentence_breakers] +
+            [c for c in sentence_breakers]
+	) + ')'
 	pattern = re.compile(regexString)
 	separators = re.finditer(pattern, text)
 	separatorsList = list(separators)

@@ -6,6 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 from yondeoku.languageAPI import languageAPI
 from yondeoku.gBlock import gBlock
 from yondeoku.Section import Section
+from yondeoku.Lemma import Lemma
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/real.db'
@@ -94,6 +95,12 @@ class ModelEncoder(json.JSONEncoder):
         		"lemmas": obj.lemmas,
         		"blockRef": obj.blockRef
         	}
+        if isinstance(obj, Lemma):
+        	return {
+        		"word": obj.word
+        	}
+        if isinstance(obj, set):
+        	return list(obj)
         return super(ModelEncoder, self).default(obj)
 
 @app.route('/')

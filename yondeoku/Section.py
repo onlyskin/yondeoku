@@ -11,4 +11,4 @@ class Section(object):
 	def __init__(self, _in, _out, text):
 		self.blockRef = [_in, _out]
 		self.text = text
-		self.lemmas = []
+		self.lemmas = set()

@@ -21,6 +21,7 @@ class generic_plLemmatizer(AbstractLemmatizer):
 	plLemmatizer backend. It has only been extracted for testing.'''
 
 	def __init__(self, dictionary_path):
+		print 'Initializing plLemmatizer'
 		super(generic_plLemmatizer, self).__init__('pl')
 		self.myLemmatizer = Lemmatizer(dictionary_path)
 

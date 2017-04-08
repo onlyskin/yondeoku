@@ -29,6 +29,7 @@ class gBlock(object):
 
 		tools = languageAPI[language]
 		sectionizer = tools.sectionizer()
+		lemmatizer = tools.lemmatizer()
 
 		#core properties which save to database
 		self.id = Block.id
@@ -39,6 +40,9 @@ class gBlock(object):
 
 		#implementation dependent properties, not stored
 		self.sections = sectionizer.sectionize(text)
+		def addLemmas(Section):
+			Section.lemmas = lemmatizer.lemmatize(Section)
+		map(lambda x: addLemmas(x), self.sections)
 		self.readSections = self.computeReadSections()
 
 	def update_readRanges(self, new_range):
