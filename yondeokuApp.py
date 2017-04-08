@@ -5,6 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 from yondeoku.languageAPI import languageAPI
 from yondeoku.gBlock import gBlock
+from yondeoku.Section import Section
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/real.db'
@@ -71,20 +72,28 @@ class ModelEncoder(json.JSONEncoder):
                 "username": obj.username,
                 "threshold": obj.threshold,
                 "known": obj.known,
-                "blocks": obj.blocks
+                "blocks": obj.gBlocks
             }
-        if isinstance(obj, Block):
+        if isinstance(obj, gBlock):
             return {
                 "id": obj.id,
                 "language": obj.language,
                 "text": obj.text,
-                "read_ranges": obj.read_ranges
+                "read_ranges": obj.readRanges,
+                "sections": obj.sections,
+                "readSections": obj.readSections
             }
         if isinstance(obj, Word):
             return {
                 "language": obj.language,
                 "word": obj.word
             }
+        if isinstance(obj, Section):
+        	return {
+        		"text": obj.text,
+        		"lemmas": obj.lemmas,
+        		"blockRef": obj.blockRef
+        	}
         return super(ModelEncoder, self).default(obj)
 
 @app.route('/')
@@ -96,6 +105,7 @@ def getUserData(username):
 	'''This retrieves the user data for user with specific
 	username and returns it as json to the webpage.'''
 	activeUser = User.query.filter_by(username=username).first()
+	activeUser.gBlocks = map(lambda x: gBlock(x), activeUser.blocks)
 	return json.dumps(activeUser, cls=ModelEncoder, sort_keys=True, indent=4,
             separators=(',', ': '))
 

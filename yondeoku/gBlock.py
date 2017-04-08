@@ -31,6 +31,7 @@ class gBlock(object):
 		sectionizer = tools.sectionizer()
 
 		#core properties which save to database
+		self.id = Block.id
 		self.language = language
 		self.text = text
 		#normalizes

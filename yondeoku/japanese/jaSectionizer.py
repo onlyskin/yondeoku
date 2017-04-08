@@ -1,4 +1,4 @@
-#! /usr/bin/env python                                                        
+#! /usr/bin/env python
 # -*- coding: utf-8 -*-
 import re
 
@@ -12,7 +12,7 @@ class jaSectionizer(AbstractSectionizer):
 	def __init__(self):
 		super(jaSectionizer, self).__init__('ja')
 
-	def sectionize(self):
+	def sectionize(self, text):
 		'''Returns a list of {Section} objects given a
 		{gBlock} object.'''
 		sections = makeSections(text, [u'。', u'！', u'？'], u'」')

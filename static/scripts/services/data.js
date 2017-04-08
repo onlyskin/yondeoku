@@ -12,7 +12,7 @@ angular.module('yondeokuApp')
 		});
 	};
 
-	console.log(dataServiceInstance);
+	console.log(dataServiceInstance.userdata);
 
 	return dataServiceInstance;
 });
