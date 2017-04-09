@@ -15,9 +15,9 @@
 		<div>The current texts you have are: <span class="note">(click to expand, read sections marked in red)</span></div>
 		<a id="addBlock" href="/#/main/add">Add a new text.</a>
 		<div ng-init="expanded=false" ng-repeat="Block in userdata.blocks" class="blocks">
-			<p class="percent">[[ getReadPercentage(Block) ]]% read<br>[[ getReadRatio(Block) ]]<p>
-			<div ng-click="expanded=!expanded" class="headerText">[[ getBlockIndex(Block) + 1 ]]) [[ Block.text.slice(0, 50)]]...</div>
-			<div ng-show="expanded" class="blockText">[[ Block.text ]]</div>
+			<p class="percent">[[ getReadPercentage(Block) ]]% read<br>([[ getReadRatio(Block) ]] sentences)<p>
+			<div ng-hide="expanded" ng-click="expanded=!expanded" class="headerText">[[ getBlockIndex(Block) + 1 ]]) [[ Block.text.slice(0, 50)]]...</div>
+			<div ng-show="expanded" ng-click="expanded=!expanded" class="blockText">[[ getBlockIndex(Block) + 1 ]]) [[ Block.text ]]</div>
 			<a ng-click="setCurrentBlock(Block)" href="/#/main/study">Read This Text</a>
 			<a ng-click="safeDeleteBlock(Block.text)" href="/#/main/select">Delete This Text</a>
 		</div>

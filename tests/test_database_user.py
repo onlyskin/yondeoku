@@ -132,6 +132,7 @@ def test_threshold_cannot_be_0(session):
 
 def test_User_json_has_id_username_threshold(session):
     x = User(username='test', password='password')
+    x.gBlocks = []
     session.add(x)
     session.commit()
     reconstituted_json = json.loads(json.dumps(x, cls=ModelEncoder))
@@ -141,6 +142,7 @@ def test_User_json_has_id_username_threshold(session):
 
 def test_User_json_has_correct_len_known(session):
     x = User(username='test', password='password')
+    x.gBlocks = []
     kw1 = Word(language='pl', word='kot')
     kw2 = Word(language='pl', word='pies')
     x.known.append(kw1)

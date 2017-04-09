@@ -67,6 +67,8 @@ class Word(db.Model):
 
 class ModelEncoder(json.JSONEncoder):
     def default(self, obj):
+    	# this will only work once the user's blocks have been
+    	# converted to gBlocks
         if isinstance(obj, User):
             return {
                 "id": obj.id,

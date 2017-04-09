@@ -11,13 +11,13 @@ angular.module('yondeokuApp')
 	$scope.getReadPercentage = function (Block) {
 		let totalSections = Block.sections.length;
 		let numberRead = Block.readSections.filter((i) => { return i == true }).length;
-		return Math.round(numberRead / totalTokens * 100);
+		return Math.round(numberRead / totalSections * 100);
 	};
 
 	$scope.getReadRatio = function (Block) {
 		let totalSections = Block.sections.length;
 		let numberRead = Block.readSections.filter((i) => { return i == true }).length;
-		return numberRead + '/' + totalTokens;
+		return numberRead + '/' + totalSections;
 	};
 
 });
