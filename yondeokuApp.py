@@ -120,7 +120,7 @@ def getUserData(username):
 def getGrammaticalWords(language):
 	'''This route returns json of the grammatical words
 	defined for the language passed in.'''
-	grammaticalWords = languageAPI[language].grammarWords
+	grammaticalWords = languageAPI[language]().grammarWords
 	return json.dumps(grammaticalWords, sort_keys=True, indent=4,
             separators=(',', ': '))
 

@@ -12,15 +12,31 @@ class LangTools(object):
 	defined for any new language.'''
 
 	def __init__(self, sectionizer, lemmatizer, definer, grammarWords):
-		self.sectionizer = sectionizer
-		self.lemmatizer = lemmatizer
-		self.definer = definer
+		self.sectionizer = sectionizer()
+		self.lemmatizer = lemmatizer()
+		self.definer = definer()
 		self.grammarWords = grammarWords
 
-plTools = LangTools(plSectionizer, plLemmatizer, plDefiner, plGrammarWords)
-jaTools = LangTools(jaSectionizer, jaLemmatizer, jaDefiner, jaGrammarWords)
+plTools = None
+jaTools = None
 
-languageAPI = {'pl': plTools,
-				'ja': jaTools}
+def getPlTools():
+	global plTools
+	if plTools == None:
+		plTools = LangTools(plSectionizer, plLemmatizer, plDefiner, plGrammarWords)
+		return plTools
+	else:
+		return plTools
+
+def getJaTools():
+	global jaTools
+	if jaTools == None:
+		jaTools = LangTools(jaSectionizer, jaLemmatizer, jaDefiner, jaGrammarWords)
+		return jaTools
+	else:
+		return jaTools
+
+languageAPI = {'pl': getPlTools,
+				'ja': getJaTools}
 
 supported_languages = languageAPI.keys()

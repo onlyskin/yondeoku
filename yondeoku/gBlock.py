@@ -27,9 +27,9 @@ class gBlock(object):
 		except:
 			raise ValueError
 
-		tools = languageAPI[language]
-		sectionizer = tools.sectionizer()
-		lemmatizer = tools.lemmatizer()
+		tools = languageAPI[language]()
+		sectionizer = tools.sectionizer
+		lemmatizer = tools.lemmatizer
 
 		#core properties which save to database
 		self.id = Block.id

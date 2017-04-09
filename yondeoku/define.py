@@ -28,7 +28,7 @@ def makeDefinitionListFromLemmaList(language, lemmaList):
 
 		return definer.define(Lemma.word)
 
-	definer = languageAPI[language].definer()
+	definer = languageAPI[language]().definer
 	definitionListList = map(
 		lambda x: makeDefinitionList(language, x, definer),
 		lemmaList)
