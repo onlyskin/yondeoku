@@ -126,6 +126,8 @@ def getGrammaticalWords(language):
 	return json.dumps(grammaticalWords, sort_keys=True, indent=4,
             separators=(',', ': '))
 
+#@app.route('/addKnownLemma/')
+
 #  .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-
 # / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \
 #`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'

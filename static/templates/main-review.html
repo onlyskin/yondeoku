@@ -5,18 +5,21 @@
 		<table ng-hide="currentBlock === null" id="vocabItems">
 			<thead>
 				<tr>
+					<th></th>
 					<th>Word</th>
-					<th>Guess Meaning</th>
+					<th>Defintions</th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr class="lemma" ng-repeat="obj in newWords track by $index + obj.lemma">
+				<tr class="lemma" ng-repeat="obj in newWords track by $index + obj.lemma" ng-init="studied=false">
 					<td class="add no-top" ng-click="addKnownLemma(false, obj.lemma)">◎</td>
 					<td class="lemma">[[ obj.lemma ]]</td>
-					<td class="guess"><input ng-model="guess" type="text"></td>
+					<td class="definition" ng-bind-html="obj.definition"></td>
+					<td ng-class="{'confirm': true, 'no-top': true, 'studied': studied}" ng-click="studied = true">◉</td>
 				</tr>
 			</tbody>
 		</table>
-		<a href="/#/main/review">Done guessing! Show me the definitions.</a>
+		<a href="/#/main/read">Done studying, let me read the section!</a>
 	</div>
 </study>

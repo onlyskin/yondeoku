@@ -10,7 +10,7 @@ from flask import url_for
 from yondeoku.japanese.grammarWords import jaGrammarWords
 
 TESTDB_PATH = 'sqlite:////tmp/fake.db'
-realApp.config['SQLALCHEMY_DATABASE_URI'] = TESTDB_PATH 
+realApp.config['SQLALCHEMY_DATABASE_URI'] = TESTDB_PATH
 realApp.config['TESTING'] = True
 
 @pytest.fixture(scope='session')
@@ -64,5 +64,10 @@ def test_user_data_route(app, db):
 	data_keys = json.loads(data).keys()
 	data_keys.sort()
 	assert data_keys == ['blocks', 'id', 'known', 'threshold', 'username']
+
+
+
+
+
 
 

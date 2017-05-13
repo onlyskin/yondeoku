@@ -8,24 +8,37 @@ angular.module('yondeokuApp').config(function($interpolateProvider, $stateProvid
 	    .state({name: 'main',
 		    	url: '/main',
 		    	templateUrl: 'static/templates/main.html',
-		    	controller: 'studyCtrl'
+				controller: 'mainCtrl'
 	    })
 		.state({name: 'select',
 				parent: 'main',
 				url: '/select',
 				templateUrl: 'static/templates/main-select.html',
-				controller: 'selectCtrl'
+				controller: 'mainCtrl'
 		})
 		.state({name: 'study',
 				parent: 'main',
 				url: '/study',
-				templateUrl: 'static/templates/main-study.html'
+				templateUrl: 'static/templates/main-study.html',
+				controller: 'mainCtrl'
+		})
+		.state({name: 'review',
+				parent: 'main',
+				url: '/review',
+				templateUrl: 'static/templates/main-review.html',
+				controller: 'mainCtrl'
+		})
+		.state({name: 'read',
+				parent: 'main',
+				url: '/read',
+				templateUrl: 'static/templates/main-read.html',
+				controller: 'mainCtrl'
 		})
 		.state({name: 'add',
 				parent: 'main',
 				url: '/add',
 				templateUrl: 'static/templates/main-add.html',
-				controller: 'editCtrl'
+				controller: 'mainCtrl'
 		});
 
 	$urlRouterProvider.otherwise('main/select');
