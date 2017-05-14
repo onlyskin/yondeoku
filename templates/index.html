@@ -6,24 +6,18 @@
 	    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/stylesheet.css') }}">
   </head>
 
-<body ng-app="yondeokuApp">
-
+<body>
 	<div id="page">
-
-		<div id="wrapper" ui-view></div>
-
-<!--
-<dev-stats></dev-stats>
--->
-
+		<div id="wrapper"></div>
 	</div>
-
-	<script src="{{ url_for('static', filename='vendor/angular.js') }}" type="text/javascript"></script>
-	<script src="{{ url_for('static', filename='vendor/angular-sanitize.js') }}" type="text/javascript"></script>
-	<script src="{{ url_for('static', filename='vendor/angular-ui-router.js') }}" type="text/javascript"></script>
-	<script src="{{ url_for('static', filename='app.js') }}" type="text/javascript"></script>
-	<script src="{{ url_for('static', filename='ctrl.js') }}" type="text/javascript"></script>
-	<script src="{{ url_for('static', filename='model.js') }}" type="text/javascript"></script>
+	<script src="//unpkg.com/mithril/mithril.js"></script>
+	<script src="{{ url_for('static', filename='mockData.js') }}"></script>
+	<script src="{{ url_for('static', filename='views/Select.js') }}"></script>
+	<script src="{{ url_for('static', filename='views/Add.js') }}"></script>
+	<script src="{{ url_for('static', filename='views/Study.js') }}"></script>
+	<script src="{{ url_for('static', filename='views/Review.js') }}"></script>
+	<script src="{{ url_for('static', filename='views/Read.js') }}"></script>
+	<script src="{{ url_for('static', filename='main.js') }}"></script>
 </body>
 
 </html>

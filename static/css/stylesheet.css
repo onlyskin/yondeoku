@@ -28,17 +28,17 @@ button {
   button:hover {
     background-color: #538de5; }
 
-user-overview {
+#select {
   margin: 2px;
   display: flex; }
-  user-overview #addBlock {
+  #select #addBlock {
     align-self: flex-end;
     text-decoration: none;
     border: 2px solid;
     border-radius: 5px;
     padding: 5px 4px 4px;
     color: black; }
-  user-overview #userMeta {
+  #select #user-info {
     width: 30%;
     background-color: white;
     display: flex;
@@ -46,15 +46,15 @@ user-overview {
     border: 1px solid black;
     padding: 10px;
     margin: 2px; }
-    user-overview #userMeta #knownWords, user-overview #userMeta #jKnownWords {
+    #select #user-info #knownWords, #select #user-info #jKnownWords {
       font-size: 12px;
       width: 100%;
       column-count: 4; }
-    user-overview #userMeta #knownWords {
+    #select #user-info #knownWords {
       padding-top: 20px; }
-    user-overview #userMeta .block {
+    #select #user-info .block {
       display: flex; }
-  user-overview #blockInfo {
+  #select #block-info {
     width: 70%;
     background-color: white;
     display: flex;
@@ -64,73 +64,73 @@ user-overview {
     border: 1px solid black;
     padding: 10px;
     margin: 2px; }
-    user-overview #blockInfo .note {
+    #select #block-info .note {
       color: red; }
-    user-overview #blockInfo .blocks {
+    #select #block-info .block {
       user-select: none;
       padding: 10px;
       font-family: monospace;
       border-bottom: 1px solid black;
       display: flex;
       flex-direction: column; }
-      user-overview #blockInfo .blocks:last-of-type {
+      #select #block-info .block:last-of-type {
         border-bottom: none; }
-      user-overview #blockInfo .blocks .blockText .read {
+      #select #block-info .block .block-text .read {
         color: red; }
-      user-overview #blockInfo .blocks .percent {
+      #select #block-info .block .percent {
         align-self: flex-end;
         text-align: right; }
-      user-overview #blockInfo .blocks a {
+      #select #block-info .block a {
         align-self: flex-end;
         padding: 5px; }
 
-study #studyContainer {
+#study #study-container {
   background-color: white;
   margin: 2px;
   padding: 10px;
   display: flex;
   flex-direction: column; }
-study #dev {
+#study #dev {
   display: flex;
   flex-direction: column; }
-  study #dev div {
+  #study #dev div {
     border-bottom: 1px solid black; }
-study #reading {
+#study #reading {
   white-space: pre-wrap;
   text-align: justify;
   width: 40%; }
-  study #reading span {
+  #study #reading span {
     color: #ccc; }
-study table tr:last-of-type td {
+#study table tr:last-of-type td {
   border-top: none; }
-  study table tr:last-of-type td button {
+  #study table tr:last-of-type td button {
     background-color: white;
     width: 100%; }
-    study table tr:last-of-type td button:hover {
+    #study table tr:last-of-type td button:hover {
       background-color: #f2f2f2; }
-study table .no-top {
+#study table .no-top {
   border-top: none; }
-study table .add {
+#study table .add {
   text-align: right;
   color: navy; }
-  study table .add:hover {
+  #study table .add:hover {
     color: dodgerblue; }
-study table .confirm {
+#study table .confirm {
   color: dodgerblue; }
-  study table .confirm:hover {
+  #study table .confirm:hover {
     color: navy; }
-study table .studied {
+#study table .studied {
   color: black; }
-study table .guessed {
+#study table .guessed {
   font-style: italic;
   color: #ccc; }
-study table td {
+#study table td {
   border-top: 1px solid black; }
-  study table td span.bold {
+  #study table td span.bold {
     font-weight: bold; }
-  study table td span.italics {
+  #study table td span.italics {
     font-style: italic; }
-study button {
+#study button {
   align-self: flex-end; }
 
 jstudy .definitionsWrapper {
@@ -151,29 +151,16 @@ jstudy .definitionsWrapper {
       display: flex;
       flex-direction: column; }
 
-dev-stats {
-  border: 2px solid Maroon;
-  padding: 10px;
-  margin: 2px; }
-  dev-stats .headerText {
-    font-weight: 800; }
-  dev-stats .blocks {
-    padding: 3px;
-    padding-left: 10px;
-    font-family: monospace; }
-  dev-stats .blockText .read {
-    color: red; }
-
-add {
+#add {
   background-color: white;
   display: flex;
   flex-direction: column;
   align-items: center; }
-  add #buttonContainer {
+  #add #button-container {
     align-self: flex-end;
     display: flex;
     flex-direction: column; }
-    add #buttonContainer a {
+    #add #button-container a {
       text-align: right;
       text-decoration: none;
       border: 2px solid;
@@ -181,11 +168,11 @@ add {
       padding: 5px 4px 4px;
       color: black;
       margin-bottom: 1em; }
-  add #addBlockContainer {
+  #add #add-block-container {
     width: 50%;
     display: flex;
     flex-direction: column; }
-    add #addBlockContainer textarea {
+    #add #add-block-container textarea {
       margin-bottom: 1em;
       width: 100%;
       height: 90vh;

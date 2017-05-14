@@ -11,7 +11,7 @@
 
 @mixin setBgColorAndHover($baseColor) {
 	background-color: $baseColor;
-	
+
 	&:hover {
 		background-color: darken($baseColor, 5%);
 	}
@@ -19,7 +19,7 @@
 
 @mixin setTextColorAndHover($baseColor) {
 	color: $baseColor;
-	
+
 	&:hover {
 		color: darken($baseColor, 20%);
 	}
@@ -50,7 +50,7 @@ button {
 	@include setBgColorAndHover(#699ce8);
 }
 
-user-overview {
+#select {
 	margin: 2px;
 
 	display: flex;
@@ -65,7 +65,7 @@ user-overview {
 		color: black;
 	}
 
-	#userMeta {
+	#user-info {
 		width: 30%;
 
 		background-color: white;
@@ -92,7 +92,7 @@ user-overview {
 
 	}
 
-	#blockInfo {
+	#block-info {
 		width: 70%;
 
 		background-color: white;
@@ -104,12 +104,12 @@ user-overview {
 		border: 1px solid black;
 		padding: 10px;
 		margin: 2px;
-	
+
 		.note {
 			color: red;
 		}
 
-		.blocks {
+		.block {
 			user-select: none;
 			padding: 10px;
 			font-family: monospace;
@@ -122,7 +122,7 @@ user-overview {
 			display: flex;
 			flex-direction: column;
 
-			.blockText {
+			.block-text {
 				.read {
 					color: red;
 				}
@@ -142,8 +142,8 @@ user-overview {
 
 }
 
-study {
-	#studyContainer {
+#study {
+	#study-container {
 		background-color: white;
 		margin: 2px;
 		padding: 10px;
@@ -184,7 +184,7 @@ study {
 		}
 
 		.no-top {
-			border-top: none;			
+			border-top: none;
 		}
 
 		.add {
@@ -261,36 +261,13 @@ jstudy {
 	}
 }
 
-dev-stats {
-	border: 2px solid Maroon;
-	padding: 10px;
-	margin: 2px;
-
-	.headerText {
-		font-weight: 800;
-	}
-
-	.blocks {
-		padding: 3px;
-		padding-left: 10px;
-		font-family: monospace;
-	}
-
-	.blockText {
-		.read {
-			color: red;
-		}
-	}
-
-}
-
-add {
+#add {
 	background-color: white;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 
-	#buttonContainer {		
+	#button-container {
 		align-self: flex-end;
 
 		display: flex;
@@ -308,7 +285,7 @@ add {
 		}
 	}
 
-	#addBlockContainer {
+	#add-block-container {
 		width: 50%;
 
 		display: flex;
