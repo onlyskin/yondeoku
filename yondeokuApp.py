@@ -109,6 +109,10 @@ class ModelEncoder(json.JSONEncoder):
 def index():
 	return render_template('index.html')
 
+@app.route('/tests')
+def tests():
+    return render_template('runner.html')
+
 @app.route('/getUserData/<username>', methods=['GET'])
 def getUserData(username):
 	'''This retrieves the user data for user with specific

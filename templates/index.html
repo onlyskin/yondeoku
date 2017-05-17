@@ -10,7 +10,9 @@
 	<div id="page">
 		<div id="wrapper"></div>
 	</div>
-	<script src="//unpkg.com/mithril/mithril.js"></script>
+	<script src="{{ url_for('static', filename='vendor/mithril.js') }}"></script>
+	<script src="{{ url_for('static', filename='utilities.js') }}"></script>
+	<script src="{{ url_for('static', filename='User.js') }}"></script>
 	<script src="{{ url_for('static', filename='mockData.js') }}"></script>
 	<script src="{{ url_for('static', filename='views/Select.js') }}"></script>
 	<script src="{{ url_for('static', filename='views/Add.js') }}"></script>
@@ -18,6 +20,7 @@
 	<script src="{{ url_for('static', filename='views/Review.js') }}"></script>
 	<script src="{{ url_for('static', filename='views/Read.js') }}"></script>
 	<script src="{{ url_for('static', filename='main.js') }}"></script>
+	<script src="{{ url_for('static', filename='app.js') }}"></script>
 </body>
 
 </html>

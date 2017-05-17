@@ -3,13 +3,6 @@
 angular.module('yondeokuApp')
 .controller('mainCtrl', function($scope, model) {
 
-	$scope.newWords = [
-		{lemma: 'pies',
-		definition: 'dog'},
-		{lemma: 'książka',
-		definition: 'book'},
-	]
-
 	$scope.renderCurrentSections = function() {
 		return 'this is an example of a rendered section'
 	}
