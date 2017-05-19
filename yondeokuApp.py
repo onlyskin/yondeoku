@@ -128,9 +128,10 @@ def user(username):
 @app.route('/add_block/<username>', methods=['POST'])
 def add_block(username):
     block_text = request.get_json()['text']
+    block_language = request.get_json()['language']
 
     user = User.query.filter_by(username=username).first()
-    b = Block(language='pl', text=block_text)
+    b = Block(language=block_language, text=block_text)
     user.blocks.append(b)
     print user.blocks[-1].text
     db.session.add(user)

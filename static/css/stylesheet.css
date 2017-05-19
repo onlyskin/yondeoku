@@ -156,18 +156,20 @@ jstudy .definitionsWrapper {
   display: flex;
   flex-direction: column;
   align-items: center; }
-  #add #button-container {
-    align-self: flex-end;
+  #add #controls {
     display: flex;
-    flex-direction: column; }
-    #add #button-container a {
-      text-align: right;
-      text-decoration: none;
-      border: 2px solid;
-      border-radius: 5px;
-      padding: 5px 4px 4px;
-      color: black;
-      margin-bottom: 1em; }
+    justify-content: space-between; }
+    #add #controls #button-container {
+      display: flex;
+      flex-direction: column; }
+      #add #controls #button-container a {
+        text-align: right;
+        text-decoration: none;
+        border: 2px solid;
+        border-radius: 5px;
+        padding: 5px 4px 4px;
+        color: black;
+        margin-bottom: 1em; }
   #add #add-block-container {
     width: 50%;
     display: flex;

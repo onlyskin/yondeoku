@@ -267,22 +267,31 @@ jstudy {
 	flex-direction: column;
 	align-items: center;
 
-	#button-container {
-		align-self: flex-end;
-
+	#controls {
 		display: flex;
-		flex-direction: column;
+		justify-content: space-between;
 
-		a {
-			text-align: right;
+		#button-container {
+			display: flex;
+			flex-direction: column;
 
-			text-decoration: none;
-			border: 2px solid;
-			border-radius: 5px;
-			padding: 5px 4px 4px;
-			color: black;
-			margin-bottom: 1em;
+			a {
+				text-align: right;
+
+				text-decoration: none;
+				border: 2px solid;
+				border-radius: 5px;
+				padding: 5px 4px 4px;
+				color: black;
+				margin-bottom: 1em;
+			}
+
 		}
+
+		#input-container {
+
+		}
+
 	}
 
 	#add-block-container {

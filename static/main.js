@@ -46,12 +46,12 @@ var ctrl = {
 	set_user_data: function(model, userdata) {
 		model.user = new User(userdata);
 	},
-	add_block_request: function(text) {
+	add_block_request: function(text, language) {
 		let self = this;
 		m.request({
 			method: 'POST',
 			url: 'add_block/' + model.username,
-			data: {text: text}
+			data: {text: text, language: language}
 		})
 		.then(function(result) {
 			self.set_user_data(model, result);
