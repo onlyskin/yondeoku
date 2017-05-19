@@ -29,7 +29,7 @@ function BlockInfoView(model, viewmodel) {
                 }, 'Read This Text'),
             m('a', {href: "/select",
                 oncreate: m.route.link,
-                onclick: function(e) {console.log('clicked delete');}}, 'Delete This Text')
+                onclick: function(e) {ctrl.safe_delete_block_request(b.id)}}, 'Delete This Text')
         ]))
     ])
 }
