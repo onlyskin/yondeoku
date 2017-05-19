@@ -1,6 +1,6 @@
 import json
 
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 
 from yondeoku.languageAPI import languageAPI
@@ -105,6 +105,12 @@ class ModelEncoder(json.JSONEncoder):
         	return list(obj)
         return super(ModelEncoder, self).default(obj)
 
+def get_user_data_json(username):
+    activeUser = User.query.filter_by(username=username).first()
+    activeUser.gBlocks = map(lambda x: gBlock(x), activeUser.blocks)
+    return json.dumps(activeUser, cls=ModelEncoder, sort_keys=True, indent=4,
+            separators=(',', ': '))
+
 @app.route('/')
 def index():
 	return render_template('index.html')
@@ -113,14 +119,34 @@ def index():
 def tests():
     return render_template('runner.html')
 
-@app.route('/getUserData/<username>', methods=['GET'])
-def getUserData(username):
+@app.route('/user/<username>', methods=['GET'])
+def user(username):
 	'''This retrieves the user data for user with specific
 	username and returns it as json to the webpage.'''
-	activeUser = User.query.filter_by(username=username).first()
-	activeUser.gBlocks = map(lambda x: gBlock(x), activeUser.blocks)
-	return json.dumps(activeUser, cls=ModelEncoder, sort_keys=True, indent=4,
-            separators=(',', ': '))
+	return get_user_data_json(username)
+
+@app.route('/add_block/<username>', methods=['POST'])
+def add_block(username):
+    block_text = request.get_json()['text']
+
+    user = User.query.filter_by(username=username).first()
+    b = Block(language='pl', text=block_text)
+    user.blocks.append(b)
+    print user.blocks[-1].text
+    db.session.add(user)
+    db.session.commit()
+    return get_user_data_json(username)
+
+@app.route('/delete_block/<username>', methods=['POST'])
+def delete_block(username):
+    block_id = request.get_json()['id']
+
+    block = Block.query.filter_by(id=block_id).first()
+
+    db.session.delete(block)
+    db.session.commit()
+
+    return get_user_data_json(username)
 
 @app.route('/getGrammaticalWords/<language>', methods=['GET'])
 def getGrammaticalWords(language):

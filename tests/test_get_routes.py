@@ -59,15 +59,10 @@ def test_index_route_returns_html(app):
 
 def test_user_data_route(app, db):
 	client = realApp.test_client()
-	response = client.get(url_for('getUserData', username='fakeUser'))
+	response = client.get(url_for('user', username='fakeUser'))
 	data = response.data
 	data_keys = json.loads(data).keys()
 	data_keys.sort()
 	assert data_keys == ['blocks', 'id', 'known', 'threshold', 'username']
-
-
-
-
-
 
 

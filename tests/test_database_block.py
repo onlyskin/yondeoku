@@ -1,4 +1,4 @@
-#! /usr/bin/env python                                                        
+#! /usr/bin/env python
 # -*- coding: utf-8 -*-
 import pytest
 import os
@@ -62,20 +62,20 @@ def session(db, request):
     return session
 
 def test_block_created(session):
-	test_block = Block(language='pl', text='test', read_ranges='')
+	test_block = Block(language='pl', text='test')
 	session.add(test_block)
 	session.commit()
 	assert test_block.id
 
 def test_block_has_language_and_text(session):
-	test_block = Block(language='pl', text='test', read_ranges='')
+	test_block = Block(language='pl', text='test')
 	session.add(test_block)
 	session.commit()
 	assert test_block.language == 'pl' and test_block.text == 'test'
 
 def test_block_has_correct_user_id_attr(session):
 	sam = User(username='sam', password='password')
-	test_block = Block(language='pl', text='test', read_ranges='')
+	test_block = Block(language='pl', text='test')
 	sam.blocks.append(test_block)
 	session.add(sam)
 	session.commit()
@@ -83,20 +83,20 @@ def test_block_has_correct_user_id_attr(session):
 
 def test_block_appended_to_user(session):
     sam = User(username='sam', password='password')
-    test_block = Block(language='pl', text='test', read_ranges='')
+    test_block = Block(language='pl', text='test')
     sam.blocks.append(test_block)
     session.add(sam)
     session.commit()
     assert len(session.query(User).first().blocks) == 1
 
 def test_block_language_cannot_be_null(session):
-    x = Block(text='testing', read_ranges='')
+    x = Block(text='testing')
     session.add(x)
     with pytest.raises(IntegrityError):
         session.commit()
 
 def test_block_text_cannot_be_null(session):
-    x = Block(language='pl', read_ranges='')
+    x = Block(language='pl')
     session.add(x)
     with pytest.raises(IntegrityError):
         session.commit()
