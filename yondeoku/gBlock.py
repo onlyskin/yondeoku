@@ -59,6 +59,7 @@ class gBlock(object):
 		Block initialisation.'''
 		readSections = [False] * len(self.sections)
 		for i, Section in enumerate(self.sections):
+			Section.read = False
 			sectionStart = Section.blockRef[0]
 			sectionEnd = Section.blockRef[1]
 			for r in self.readRanges:
@@ -66,6 +67,7 @@ class gBlock(object):
 				rangeEnd = r[1]
 				if sectionStart >= rangeStart and sectionEnd <= rangeEnd:
 					readSections[i] = True
+					Section.read = True
 		return readSections
 
 	def makeReadRangeString(self):
