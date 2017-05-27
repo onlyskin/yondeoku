@@ -7,6 +7,7 @@ from yondeoku.languageAPI import languageAPI
 from yondeoku.gBlock import gBlock
 from yondeoku.Section import Section
 from yondeoku.Lemma import Lemma
+# from yondeoku.make_study_list import make_study_list
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/real.db'
@@ -65,6 +66,45 @@ class Word(db.Model):
 # / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \
 #`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'
 
+def _get_all_read_sections(gBlocks):
+    all_sections = reduce(lambda a, b: a + b, [x.sections for x in gBlocks])
+    read_sections = [s for s in all_sections if s.read]
+    return read_sections
+
+def _get_user_read_sections(user_id, language):
+    gBlocks = _get_user_gBlocks(user_id, language)
+    return _get_all_read_sections(gBlocks)
+
+def _get_user_known_words(user_id, language):
+    user = User.query.filter_by(id=user_id).first()
+    return [w.word for w in user.known if w.language == language]
+
+def _get_grammatical_words(block_id):
+    language = _get_block_language(block_id)
+    return languageAPI[language]().grammarWords
+
+def _get_block_language(block_id):
+    block = Block.query.filter_by(id=block_id).first()
+    return block.language
+
+def _get_user_gBlocks(user_id, language):
+    user = User.query.filter_by(id=user_id).first()
+    return [gBlock(x) for x in user.blocks if x.language == language]
+
+from yondeoku._get_lemmas_above_threshold import _get_lemmas_above_threshold
+
+def _get_lemmas_from_sections(sections):
+    return reduce(lambda a, b: a + b, [x.lemmas for x in sections], [])
+
+def _get_user_lemmas_above_threshold(user_id, language):
+    gBlocks = _get_user_gBlocks(user_id, language)
+    lemmas = _get_lemmas_from_sections(_get_all_read_sections(gBlocks))
+    return _get_lemmas_above_threshold(lemmas, 8)
+
+#  .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-
+# / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \
+#`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'
+
 class ModelEncoder(json.JSONEncoder):
     def default(self, obj):
     	# this will only work once the user's blocks have been
@@ -95,7 +135,8 @@ class ModelEncoder(json.JSONEncoder):
         	return {
         		"text": obj.text,
         		"lemmas": obj.lemmas,
-        		"blockRef": obj.blockRef
+        		"blockRef": obj.blockRef,
+                "read": obj.read
         	}
         if isinstance(obj, Lemma):
         	return {
@@ -110,6 +151,10 @@ def get_user_data_json(username):
     activeUser.gBlocks = map(lambda x: gBlock(x), activeUser.blocks)
     return json.dumps(activeUser, cls=ModelEncoder, sort_keys=True, indent=4,
             separators=(',', ': '))
+
+#  .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-
+# / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \
+#`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'
 
 @app.route('/')
 def index():
@@ -149,15 +194,29 @@ def delete_block(username):
 
     return get_user_data_json(username)
 
-@app.route('/getGrammaticalWords/<language>', methods=['GET'])
-def getGrammaticalWords(language):
-	'''This route returns json of the grammatical words
-	defined for the language passed in.'''
-	grammaticalWords = languageAPI[language]().grammarWords
-	return json.dumps(grammaticalWords, sort_keys=True, indent=4,
-            separators=(',', ': '))
+from yondeoku._get_next_words import _get_next_n_words_and_section_indices
 
-#@app.route('/addKnownLemma/')
+def make_study_list(user_id, block_id):
+    current_block = Block.query.filter_by(id=block_id).first()
+    current_gBlock = gBlock(current_block)
+
+    above_threshold_word_set = _get_user_lemmas_above_threshold(user_id, current_block.language)
+    grammatical_word_set = _get_grammatical_words(block_id)
+    known_word_set = _get_user_known_words(user_id, current_block.language)
+    exclude_set = above_threshold_word_set.union(grammatical_word_set).union(known_word_set)
+
+    return _get_next_n_words_and_section_indices(current_gBlock, exclude_set, 10)
+
+@app.route('/get_study_words', methods=['POST'])
+def get_next_words():
+    print 'get study words received post'
+    print request.get_json()
+
+    user_id = request.get_json()['user_id']
+    block_id = request.get_json()['block_id']
+    study_list = make_study_list(user_id, block_id)
+
+    return json.dumps(study_list, cls=ModelEncoder)
 
 #  .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-
 # / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \
