@@ -15,7 +15,7 @@ class LangTools(object):
 		self.sectionizer = sectionizer()
 		self.lemmatizer = lemmatizer()
 		self.definer = definer()
-		self.grammarWords = grammarWords
+		self.grammarWords = set(grammarWords)
 
 plTools = None
 jaTools = None
