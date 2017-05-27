@@ -13,3 +13,12 @@ describe('block_info_view_model', function() {
 
 });
 
+describe('study_state_manager', function() {
+
+	it('', function() {
+		assert.isTrue();
+	});
+
+
+});
+

@@ -1,11 +1,17 @@
+function KnownWordsView(model, language) {
+    var words = model.user.get_known(language);
+    return m('.known-display', [
+        m('.known-words-title', model.language_map[language] + ' known words: (' + words.length + ')'),
+        m('.known-words', words.map((o) => m('', o.word)))
+    ])
+}
+
 function UserInfoView(model) {
     return m('#user-info', [
         m('h3', 'Username: ' + model.user.username),
-        m('p', {title: 'These are the words that you have marked as definitely known while reading texts.'}, [
-            m('#knownWords', model.user.get_known('pl').map((o) => m('', o.word))),
-            m('#knownWords', model.user.get_known('ja').map((o) => m('', o.word))),
-            ]),
-        m('p', {title: 'After this numer of encounters of a given word, it will no longer appear in your vocab lists.'}, 'Threshold: ' + model.user.threshold)
+        m('', {title: 'These are the words that you have marked as definitely known while reading texts.'},
+            model.languages.map(function(l) {return KnownWordsView(model, l);})),
+        m('', {title: 'After this numer of encounters of a given word, it will no longer appear in your vocab lists.'}, 'Threshold: ' + model.user.threshold)
     ])
 }
 
@@ -25,7 +31,7 @@ function BlockInfoView(model, viewmodel) {
             ),
             m('a', {href: "/study",
                 oncreate: m.route.link,
-                onclick: function(e) {console.log('clicked read');}
+                onclick: function(e) {model.current_block_id = b.id;}
                 }, 'Read This Text'),
             m('a', {href: "/select",
                 oncreate: m.route.link,

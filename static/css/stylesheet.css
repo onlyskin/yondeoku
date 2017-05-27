@@ -46,12 +46,6 @@ button {
     border: 1px solid black;
     padding: 10px;
     margin: 2px; }
-    #select #user-info #knownWords, #select #user-info #jKnownWords {
-      font-size: 12px;
-      width: 100%;
-      column-count: 4; }
-    #select #user-info #knownWords {
-      padding-top: 20px; }
     #select #user-info .block {
       display: flex; }
   #select #block-info {
@@ -83,6 +77,13 @@ button {
       #select #block-info .block a {
         align-self: flex-end;
         padding: 5px; }
+
+.known-display {
+  padding-bottom: 10px; }
+  .known-display .known-words {
+    font-size: 12px;
+    width: 100%;
+    column-count: 4; }
 
 #study #study-container {
   background-color: white;

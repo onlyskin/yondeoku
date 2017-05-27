@@ -37,4 +37,9 @@ class User {
     });
     return filtered;
   }
+
+  get_block(id) {
+    var block = this.blocks.filter(function(b) {return b.id == id;})[0]
+    return block;
+  }
 }

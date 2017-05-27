@@ -1,9 +1,18 @@
 var model = {
+	languages: ['pl', 'ja'],
+	language_map: {pl: 'Polish', ja: 'Japanese'},
 	username: 'Sam',
 	user: new User({threshold: 'loading...', username: 'loading...', known: [], blocks: []}),
-	current_block_id: null,
-	current_section: null,
-	new_words: null
+	current_block_id: 1,
+}
+
+var study_state_manager = {
+	current_section_indices: [],
+	new_lemmas: [],
+	reset: function() {
+		this.current_section_indices = [];
+		this.new_lemmas = [];
+	}
 }
 
 var block_info_view_model = {
@@ -39,6 +48,7 @@ var ctrl = {
 			})
 			.then(function(result) {
 				self.set_user_data(model, result);
+				self.update_study_state_manager(study_state_manager);
 				self.initialized = true;
 			});
 		}
@@ -72,6 +82,20 @@ var ctrl = {
 		})
 		.then(function(result) {
 			self.set_user_data(model, result);
+		});
+	},
+	get_current_block: function(model) {
+		return model.user.get_block(model.current_block_id);
+	},
+	update_study_state_manager: function(model, study_state_manager) {
+		m.request({
+			method: 'POST',
+			url: 'get_study_words',
+			data: {user_id: model.user.id,
+				   block_id: get_current_block(model)}
+		})
+		.then(function(result) {
+			console.log(result);
 		});
 	}
 }
